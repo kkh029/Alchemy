@@ -1,0 +1,19 @@
+dependencies: \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/MiniCL/MiniCLTask/MiniCLTask.cpp \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/MiniCL/MiniCLTask/MiniCLTask.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletMultiThreaded/PlatformDefinitions.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btScalar.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btMinMax.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/vectormath/vmInclude.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/vectormath/sse/vectormath_aos.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/vectormath/sse/vecidx_aos.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/vectormath/sse/floatInVec.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/vectormath/sse/boolInVec.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/vectormath/sse/vec_aos.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/vectormath/sse/quat_aos.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/vectormath/sse/mat_aos.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletMultiThreaded/PpuAddressSpace.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btAlignedAllocator.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletMultiThreaded/SpuFakeDma.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/MiniCL/MiniCLTaskScheduler.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btAlignedObjectArray.h

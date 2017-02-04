@@ -1,0 +1,29 @@
+dependencies: \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.cpp \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/BulletCollision/NarrowPhaseCollision/btConvexCast.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btTransform.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btMatrix3x3.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btVector3.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btScalar.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btMinMax.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btAlignedAllocator.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btQuaternion.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btQuadWord.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btIDebugDraw.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/BulletCollision/NarrowPhaseCollision/btSimplexSolverInterface.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//CollisionShapes/btConvexShape.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//CollisionShapes/btCollisionShape.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//BroadphaseCollision/btBroadphaseProxy.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//CollisionShapes/btCollisionMargin.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btTransformUtil.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//CollisionShapes/btSphereShape.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//CollisionShapes/btConvexInternalShape.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/LinearMath/btAabbUtil2.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/BulletCollision/NarrowPhaseCollision/btGjkPairDetector.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/BulletCollision/NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/external/bullet/BulletCollision/NarrowPhaseCollision/btPointCollector.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//CollisionShapes/btStaticPlaneShape.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//CollisionShapes/btConcaveShape.h \
+  /Users/kyounghwan/Documents/cocos/Alchemy/Alchemy/cocos2d/build/../external/bullet/BulletCollision//CollisionShapes/btTriangleCallback.h
