@@ -10,13 +10,12 @@ class Field;
 class PEIcon;
 class PEPopUpManager;
 
-class GameLayer : public CCLayer
+class GameLayer : public Layer
 {
 public:
 	bool init(int stage);
 
-	static CCScene* scene(int stage);
-	void keyBackClicked(void);
+	static Scene* scene(int stage);
 	void GamePause(void);
 	void GameResume(void);
 	virtual void onExit();

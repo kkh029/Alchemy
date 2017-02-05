@@ -35,7 +35,7 @@ void PETime::StartTime() {
 
 int PETime::GetCurrentTimeInMilli()
 {
-	timeval time;
+	_STRUCT_TIMEVAL time;
 	gettimeofday(&time, NULL);
 
 	unsigned long millisecs = (time.tv_sec * 1000) + (time.tv_usec / 1000);

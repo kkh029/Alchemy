@@ -11,7 +11,7 @@
 
 #include "../Common.h"
 
-class PEStageBtn : public CCNode
+class PEStageBtn : public Node
 {
 public:
 	static PEStageBtn* create(int index, bool valid);
@@ -20,28 +20,28 @@ public:
 	void toggle_btn(bool flag);
 	void set_valid(bool valid);
 	bool get_valid(void);
-	CCRect get_boundingbox(void);
+	Rect get_boundingbox(void);
 	
 private:
 	int stage;
 	int stars;
 	bool is_valid;
 	bool isTouched;
-	CCSprite* touched_btn_back;
-	CCSprite* touched_btn_back_select;
-	CCSprite* stage_num_text;
+	Sprite* touched_btn_back;
+	Sprite* touched_btn_back_select;
+	Sprite* stage_num_text;
 	
 	int load_stage_stars(void);
-	CCSprite* makeStageNumber(int num, float *size, bool is_visible);
+	Sprite* makeStageNumber(int num, float *size, bool is_visible);
 	void init_btn(int index, bool valid);
 };
 
-class PEMain : public CCLayer
+class PEMain : public Layer
 {
 public:
 	bool init();
 
-	static CCScene* scene();
+	static Scene* scene();
 
 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesMoved(CCSet *pTouch, CCEvent *pEvent);
@@ -53,16 +53,16 @@ private:
 	//void introOut(CCObject* in);
 	//CCSprite* m_title;
 	void startMain(float in);
-	void back(CCObject* pSender);
+	void back(Ref* pSender);
 	void resume(void);
-	void setting(CCObject* pSender);
+	void setting(Ref* pSender);
 	void note();
 	void stage();
 	void infinite();
 	void profile();
 	void shop();
 	void stage_select(int stage);
-	void side_btn(CCObject* pSender);
+	void side_btn(Ref* pSender);
 	void change_stage_table(int btn_index);
 
 	void init_bottonBtn();
@@ -78,20 +78,18 @@ private:
 	int  check_touched_btn(Vec2 pos);
 
 	PEStageBtn* stage_btn[12];
-	CCMenu* main_stage_back;
-	CCMenu* main_stage_next;
+	Menu* main_stage_back;
+	Menu* main_stage_next;
 	Vec2 main_left_top;
 	int select_stage_btn;
 
 	void (PEMain::*onButtonSelect[4])();
 	void onEndOfSelecctorMoving(CCObject* obj);
-
-	void keyBackClicked(void);
 	void back_key_clicked_reset(float in);
 
-	CCSprite* bottom_select_stroke;
-	CCSprite* bottom_unselect_icon_array[4];
-	CCSprite* bottom_select_icon_array[4];
+	Sprite* bottom_select_stroke;
+	Sprite* bottom_unselect_icon_array[4];
+	Sprite* bottom_select_icon_array[4];
 	int last_selected_bottom_icon;
 	int selected_bottom_icon;
 	int tracking_bottom_icon;
@@ -100,11 +98,11 @@ private:
 	bool bottom_card_enable;
 	int main_stage_index;
 
-	CCSprite* main_title_array[4];
-	CCSprite* main_card_array[4];
-	CCSprite* main_card;
+	Sprite* main_title_array[4];
+	Sprite* main_card_array[4];
+	Sprite* main_card;
 	
-	CCMenu* top_btn;
+	Menu* top_btn;
 
 	int touched_id;
 };

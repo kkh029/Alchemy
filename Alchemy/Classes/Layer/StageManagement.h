@@ -30,10 +30,10 @@ struct s_peStageInform {
 	int monsterSpeed;
 };
 
-typedef void (CCObject::*SEL_SPAWN)(int monster_index, float move_speed_stage_scale);
-typedef void (CCObject::*SEL_PASS)(void);
+typedef void (Ref::*SEL_SPAWN)(int monster_index, float move_speed_stage_scale);
+typedef void (Ref::*SEL_PASS)(void);
 
-class StageManagement : public CCNode
+class StageManagement : public Node
 {
 public:
 	StageManagement(int stage);
@@ -42,23 +42,23 @@ public:
 	void resetTimeTable();
 	void setTimeTable(int stage);
 	void update(float delta);
-	void setSpawnMonster(CCObject* target, SEL_SPAWN callback);
-	void setPassCallback(CCObject* target, SEL_PASS callback);
+	void setSpawnMonster(Ref* target, SEL_SPAWN callback);
+	void setPassCallback(Ref* target, SEL_PASS callback);
 	s_peTimeTable* getTimeTable(int time);
 
 protected:
 
 private:
-	CCObject*	pListener;
+	Ref*	pListener;
     SEL_SPAWN	spawn_monster;
-	CCObject*	pListener_pass_callback;
+	Ref*	pListener_pass_callback;
     SEL_PASS 	pass_callback;
 	s_peTimeTable m_timeTable[MAX_GAME_TIME];
 	s_peStageInform stage_status;
 	bool send_success_flag;
 	
-	cc_timeval time_play[2];
-	cc_timeval time_spawn[2];
+	timeval time_play[2];
+	timeval time_spawn[2];
 	
 	double* pSawnTime;
 	int* pMonNum;

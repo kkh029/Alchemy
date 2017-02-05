@@ -70,9 +70,9 @@ private:
 	float m_move_to_y;
 	int touched_id;
 	
-	void openBall(CCObject* pObject);
-	void createMonster(CCObject* pObject);
-	void removeBall(CCObject* pObject);
+	void openBall(Ref* pObject);
+	void createMonster(Ref* pObject);
+	void removeBall(Ref* pObject);
 	int rand_num_count[6];
 	
 	/*	

@@ -24,58 +24,58 @@ bool PEPopupSuccess::init()
 	autorelease();
 	scheduleUpdate();
 	
-	CCLog("door remain : %d", door_num);
+	log("door remain : %d", door_num);
 	
-	Size winSize = CCDirector::sharedDirector()->getWinSize();
+	Size winSize = Director::getInstance()->getWinSize();
 	
 	//backLayer
-	CCLayerColor* backLayer=CCLayerColor::create(ccc4(0,0,0,150), winSize.width, winSize.height);
-	backLayer->setAnchorPoint(ccp(0,0));
-	backLayer->setPosition(ccp(0,0));
+	LayerColor* backLayer=LayerColor::create(Color4B(0,0,0,150), winSize.width, winSize.height);
+	backLayer->setAnchorPoint(Vec2(0,0));
+	backLayer->setPosition(Vec2(0,0));
 	this->addChild(backLayer);
 	
 	//popUpLayer
-	popUpBack = CCSprite::create("Layer/lPopUp/lPopUpBack.png");
-	popUpBack->setPosition( ccp((winSize.width/2), (winSize.height/2)+100) );
+	popUpBack = Sprite::create("Layer/lPopUp/lPopUpBack.png");
+	popUpBack->setPosition(Vec2((winSize.width/2), (winSize.height/2)+100) );
 	this->addChild(popUpBack);
 	backSize = popUpBack->getContentSize();
 	
-	CCSprite* pauseTitle = CCSprite::create("Layer/lPopUp/lClear.png");
-	pauseTitle->setPosition( ccp((backSize.width/2), (backSize.height/2 + 300)) );
+	Sprite* pauseTitle = Sprite::create("Layer/lPopUp/lClear.png");
+	pauseTitle->setPosition(Vec2((backSize.width/2), (backSize.height/2 + 300)) );
 	popUpBack->addChild(pauseTitle);
 	
 	float size_x;
-	CCSprite* stageTitle = makeStageNumber( GameLayer::getStageNum(), &size_x);
-	stageTitle->setPosition( ccp((backSize.width/2 - size_x/2), (backSize.height/2 + 170)) );
+	Sprite* stageTitle = makeStageNumber( GameLayer::getStageNum(), &size_x);
+	stageTitle->setPosition(Vec2((backSize.width/2 - size_x/2), (backSize.height/2 + 170)) );
 	popUpBack->addChild(stageTitle);
 
-	CCMenuItemImage *RESTARTItem = CCMenuItemImage::create(
+	MenuItemImage *RESTARTItem = MenuItemImage::create(
 														   "Layer/lPopUp/lRestartBase.png",
 														   "Layer/lPopUp/lRestartTouch.png",
 														   this,
 														   menu_selector(PEPopupSuccess::restart) );
-    CCMenu* RESTARTbtn = CCMenu::create(RESTARTItem, NULL);
-    RESTARTbtn->setPosition(ccp(backSize.width/2, backSize.height/2 - 200.0f));
+    Menu* RESTARTbtn = CCMenu::create(RESTARTItem, NULL);
+    RESTARTbtn->setPosition(Vec2(backSize.width/2, backSize.height/2 - 200.0f));
     popUpBack->addChild(RESTARTbtn);
 	
-	CCMenuItemImage *EXITItem = CCMenuItemImage::create(
+	MenuItemImage *EXITItem = MenuItemImage::create(
 														"Layer/lPopUp/lExitBase.png",
 														"Layer/lPopUp/lExitTouch.png",
 														this,
 														menu_selector(PEPopupSuccess::exit) );
-    CCMenu* EXITbtn = CCMenu::create(EXITItem, NULL);
+    Menu* EXITbtn = Menu::create(EXITItem, NULL);
 	Size EXITbtnSize = EXITItem->getContentSize();
-    EXITbtn->setPosition(ccp(EXITbtnSize.width/2+50, backSize.height/2 - 200.0f));
+    EXITbtn->setPosition(Vec2(EXITbtnSize.width/2+50, backSize.height/2 - 200.0f));
     popUpBack->addChild(EXITbtn);
 	
-	CCMenuItemImage *NEXTItem = CCMenuItemImage::create(
+	MenuItemImage *NEXTItem = MenuItemImage::create(
 														  "Layer/lPopUp/lNextBase.png",
 														  "Layer/lPopUp/lNextTouch.png",
 														  this,
 														  menu_selector(PEPopupSuccess::resume) );
-    CCMenu* NEXTbtn = CCMenu::create(NEXTItem, NULL);
+    Menu* NEXTbtn = Menu::create(NEXTItem, NULL);
 	Size NEXTbtnSize = NEXTItem->getContentSize();
-    NEXTbtn->setPosition(ccp(backSize.width - (NEXTbtnSize.width/2+50), backSize.height/2 - 200.0f));
+    NEXTbtn->setPosition(Vec2(backSize.width - (NEXTbtnSize.width/2+50), backSize.height/2 - 200.0f));
     popUpBack->addChild(NEXTbtn);
 	
     // show stage score - star
@@ -88,128 +88,127 @@ bool PEPopupSuccess::init()
     else if(door_num > 2)
         score = 2;
     
-	CCArmature* star_0 = CCArmature::create("lStar");
+	Armature* star_0 = Armature::create("lStar");
 	star_0->setPosition(backSize.width/4, backSize.height/2);
- 	star_0->getAnimation()->playWithIndex(1, -1, -1, -0, 0);
+ 	star_0->getAnimation()->playWithIndex(1, -1, -1);
 	popUpBack->addChild(star_0);
 	
 	int door1_star_ani = 0;
 	if(score > 1)
 		door1_star_ani = 1;
 		
-	CCArmature* star_1 = CCArmature::create("lStar");
+	Armature* star_1 = Armature::create("lStar");
 	star_1->setPosition(backSize.width/2, backSize.height/2);
-	star_1->getAnimation()->playWithIndex(door1_star_ani, -1, -1, 0, 0);
+	star_1->getAnimation()->playWithIndex(door1_star_ani, -1, -1);
 	popUpBack->addChild(star_1);
 	
 	int door2_star_ani = 0;
 	if(score > 2)
 		door2_star_ani = 1;
-	CCArmature* star_2 = CCArmature::create("lStar");
+	Armature* star_2 = Armature::create("lStar");
 	star_2->setPosition(backSize.width*3/4 , backSize.height/2);
- 	star_2->getAnimation()->playWithIndex(door2_star_ani, -1, -1, 0, 0);
+ 	star_2->getAnimation()->playWithIndex(door2_star_ani, -1, -1);
 	popUpBack->addChild(star_2);
 	
     // check stage score - save stage score
 	char buf[15];
     int pre_score;
 	sprintf(buf, "stage%d", GameLayer::getStageNum());
-    pre_score = CCUserDefault::sharedUserDefault()->getIntegerForKey(buf);
+    pre_score = UserDefault::getInstance()->getIntegerForKey(buf);
     if(pre_score < score)
     {
         if(door2_star_ani)
-            CCUserDefault::sharedUserDefault()->setIntegerForKey(buf, 3);
+            UserDefault::getInstance()->setIntegerForKey(buf, 3);
         else if(door1_star_ani)
-            CCUserDefault::sharedUserDefault()->setIntegerForKey(buf, 2);
+            UserDefault::getInstance()->setIntegerForKey(buf, 2);
         else
-            CCUserDefault::sharedUserDefault()->setIntegerForKey(buf, 1);
+            UserDefault::getInstance()->setIntegerForKey(buf, 1);
     }
     return true;
 }
 
-void PEPopupSuccess::restart(CCObject* pSender)
+void PEPopupSuccess::restart(Ref* pSender)
 {
 	
 	PEBackgroundMusic::sharedPEBackgroundMusic()->PE_stop();
-	CCScene *nextScene = GameLayer::scene(GameLayer::getStageNum());
+	Scene *nextScene = GameLayer::scene(GameLayer::getStageNum());
 	if(nextScene != NULL)
 	{
-		CCTransitionScene* pTran = CCTransitionFade::create(2.0f, nextScene);
-		CCDirector::sharedDirector()->replaceScene(pTran);
+		TransitionScene* pTran = TransitionFade::create(2.0f, nextScene);
+		Director::getInstance()->replaceScene(pTran);
 	}
 	
 	char buf[5];
 	sprintf(buf, "%d", POPUP_RESUME);
-	CCString* popParam=CCString::create(buf);
-	CCNotificationCenter::sharedNotificationCenter()->postNotification("scene_popup", popParam);
+	__String* popParam=__String::create(buf);
+	__NotificationCenter::getInstance()->postNotification("scene_popup", popParam);
 	this->removeFromParentAndCleanup(true);
 	
 }
 
-void PEPopupSuccess::exit(CCObject* pSender)
+void PEPopupSuccess::exit(Ref* pSender)
 {
-	CCScene *nextScene = PEMain::scene();
+	Scene *nextScene = PEMain::scene();
 	if(nextScene != NULL)
 	{
-		CCTransitionScene* pTran = CCTransitionFade::create(5.0f, nextScene);
-		CCDirector::sharedDirector()->replaceScene(pTran);
+		TransitionScene* pTran = TransitionFade::create(5.0f, nextScene);
+		Director::getInstance()->replaceScene(pTran);
 	}
 	
 	char buf[5];
 	sprintf(buf, "%d", POPUP_RESUME);
-	CCString* popParam=CCString::create(buf);
-	CCNotificationCenter::sharedNotificationCenter()->postNotification("scene_popup", popParam);
+	__String* popParam=__String::create(buf);
+	__NotificationCenter::getInstance()->postNotification("scene_popup", popParam);
 	this->removeFromParentAndCleanup(true);
 }
 
-void PEPopupSuccess::resume(CCObject* pSender)
+void PEPopupSuccess::resume(Ref* pSender)
 {
 	char buf[5];
 	sprintf(buf, "%d", POPUP_RESUME);
-	CCString* popParam=CCString::create(buf);
-	CCNotificationCenter::sharedNotificationCenter()->postNotification("scene_popup", popParam);
+	__String* popParam=__String::create(buf);
+	__NotificationCenter::getInstance()->postNotification("scene_popup", popParam);
 	this->removeFromParentAndCleanup(true);
 }
 
 
-CCSprite* PEPopupSuccess::makeStageNumber(int num, float *size)
+Sprite* PEPopupSuccess::makeStageNumber(int num, float *size)
 {
-    CCSprite *stageLabel = CCSprite::create();
+    Sprite *stageLabel = Sprite::create();
     int i, index;
-	//float offset = 0.0f;
-    CCSprite *spr;
+    Sprite *spr;
 	char file_path[40];
 	
 	*size = 0.0;
-    stageLabel->setAnchorPoint( ccp( 0, 0 ) );
+    stageLabel->setAnchorPoint( Vec2( 0, 0 ) );
 	
-	CCSprite *stage =  CCSprite::create("Layer/lPopUp/lStage.png");
-	stage->setAnchorPoint( ccp( 0, 0 ) );
-    stage->setPosition( ccp(*size, -5.0f) );
+	Sprite *stage =  Sprite::create("Layer/lPopUp/lStage.png");
+	stage->setAnchorPoint( Vec2( 0, 0 ) );
+    stage->setPosition( Vec2(*size, -5.0f) );
 	stageLabel->addChild( stage );
 	*size += (stage->getContentSize().width + 20.0f);
 	
     /* cur gauge */
-    CCArray *num_array = CCArray::create();
+    __Array *num_array = __Array::create();
     if( num > 0 )
 	{
         while( num != 0 )
 		{
-            num_array->addObject( CCInteger::create( num%10 ) );
+            num_array->addObject( __Integer::create( num%10 ) );
             num /= 10;
 		}
 	}
     else
-        num_array->addObject( CCInteger::create( 0 ) );
+        num_array->addObject( __Integer::create( 0 ) );
 	
     
     for( i=num_array->count()-1; i>=0; i-- )
 	{
-        index = ( dynamic_cast<CCInteger*>( num_array->objectAtIndex(i) ) )->getValue();
+        index = ( dynamic_cast<__Integer*>( num_array->getObjectAtIndex(i) ) )->getValue();
 		sprintf(file_path, "Layer/lPopUp/lPopUpNum%d.png", index);
 		
-        spr = CCSprite::create(file_path);
-        spr->setAnchorPoint( ccp( 0, 0 ) );
+        spr = Sprite::create(file_path);
+        spr->setAnchorPoint( Vec2( 0, 0 ) );
         spr->setPositionX( *size );
 		
         stageLabel->addChild( spr );

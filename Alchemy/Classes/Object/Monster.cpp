@@ -135,7 +135,7 @@ void Monster::Attack(PEObject* obj)
 	if(m_ani_index != MONSTER_ATTACK)
 	{
 		m_ani_index = MONSTER_ATTACK;
-		getAnimation()->playWithIndex(1, -1, -1, -1, TWEEN_EASING_MAX);
+		getAnimation()->playWithIndex(1, -1, -1);
 	}
 
 	
@@ -147,9 +147,8 @@ void Monster::Attack(PEObject* obj)
 	else
 	{
 		gettimeofday(&event_time[1], NULL);
-		double diffTime = CCTime::timersubCocos2d(
-										&event_time[0],
-										&event_time[1] );
+        long diffTime = time_interval(event_time[0], event_time[1]);
+ 
 		if(diffTime > 2000)
 		{
 			reset = true;

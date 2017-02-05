@@ -65,4 +65,9 @@ class Common
 {
 };
 
+inline long time_interval(_STRUCT_TIMEVAL start, _STRUCT_TIMEVAL end)
+{
+    return (end.tv_sec - start.tv_sec)*1000 + (end.tv_usec - start.tv_usec)/1000;
+}
+
 #endif

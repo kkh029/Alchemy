@@ -35,21 +35,21 @@ Alchemy* Icicle::create(PEObject* obj)
 
 void Icicle::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
 	setScale(1.5f);
-	setAnchorPoint(ccp(0.5f, 0.5f));
+	setAnchorPoint(Vec2(0.5f, 0.5f));
 	ani = getAnimation();
 
-	ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+	ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 }
 
 
 bool Icicle::PE_update(unsigned int flag) {
 	Vec2 index = getPosIndex();
 	Vec2 tower_pos = getPosition();
-	CCRect tower_box = boundingBox();
+	Rect tower_box = getBoundingBox();
 	int idx_x = index.x;
 	int idx_y = index.y;
 
@@ -67,7 +67,7 @@ bool Icicle::PE_update(unsigned int flag) {
 				{
 					Monster* obj;
 					obj = m_pCollision->m_monsters_matrix[x][i];
-					if(tower_box.intersectsRect(obj->boundingBox()))
+					if(tower_box.intersectsRect(obj->getBoundingBox()))
 					{
 						obj->Hit(m_ap);
 						obj->slow(0.5, 3);

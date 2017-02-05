@@ -17,7 +17,7 @@ struct s_PE_BGM
 	unsigned int time;   //msec
 };
 
-class PEBackgroundMusic : public CCNode
+class PEBackgroundMusic : public Node
 {
 public:
 	void PE_play(int index);
