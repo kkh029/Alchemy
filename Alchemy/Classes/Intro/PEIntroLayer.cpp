@@ -22,8 +22,8 @@
 #define INTRO_BUTTON_DELAY		1.5f
 #define INTRO_BUTTON_FADE_IN_DELAY 1.5f
 #endif
-CCScene* PEIntroLayer::scene(){
-	CCScene* pScene = CCScene::create();
+Scene* PEIntroLayer::scene(){
+	Scene* pScene = Scene::create();
 	PEIntroLayer* pIntroLayer = PEIntroLayer::create();
 	pScene->addChild(pIntroLayer, 0);
 	
@@ -32,7 +32,7 @@ CCScene* PEIntroLayer::scene(){
 
 bool PEIntroLayer::init()
 {
-	if ( !CCLayerColor::initWithColor(ccc4(0, 0, 0, 0)) ) 
+	if ( !LayerColor::initWithColor(ccc4(0, 0, 0, 0)) ) 
     {
         return false;
     }
@@ -46,10 +46,10 @@ bool PEIntroLayer::init()
 void PEIntroLayer::startIntro(float in)
 {
 	setTouchEnabled(true);
-	m_title = CCSprite::create("title.png");
+	m_title = Sprite::create("title.png");
 	
-	m_title->setPosition(Vec2Zero);
-	m_title->setAnchorPoint(ccp(0.0f, 0.0f));
+	m_title->setPosition(Vec2::ZERO);
+	m_title->setAnchorPoint(Vec2(0.0f, 0.0f));
 	addChild(m_title);
 	
 	m_title->setOpacity(0);
@@ -58,11 +58,11 @@ void PEIntroLayer::startIntro(float in)
 }
 void PEIntroLayer::startButton(float in)
 {
-	Size winSize=CCDirector::sharedDirector()->getWinSize();
+	Size winSize=Director::getInstance()->getWinSize();
 	//popUpLayer
-	buttonLayer=CCLayerColor::create(ccc4(0,0,0,255), 350,100);
-	buttonLayer->setPosition( ccp((winSize.width - buttonLayer->getContentSize().width)/2, winSize.height/4 - buttonLayer->getContentSize().height/2) );
-	buttonLayer->setAnchorPoint( ccp(0,0) );
+	buttonLayer=LayerColor::create(ccc4(0,0,0,255), 350,100);
+	buttonLayer->setPosition( Vec2((winSize.width - buttonLayer->getContentSize().width)/2, winSize.height/4 - buttonLayer->getContentSize().height/2) );
+	buttonLayer->setAnchorPoint( Vec2(0,0) );
 	buttonLayer->setOpacity(0);
     CCFadeTo*  fadeLayer = CCFadeTo::create(INTRO_BUTTON_FADE_IN_DELAY, 255);
     buttonLayer->runAction(fadeLayer);
@@ -71,8 +71,8 @@ void PEIntroLayer::startButton(float in)
 	startItem->setColor(ccc3(255,255,255));
 	CCMenu* mStartButton=CCMenu::create();
 	mStartButton->addChild(startItem);
-	mStartButton->setPosition( ccp(winSize.width/2, winSize.height/4)  );
-	mStartButton->setAnchorPoint( ccp(0.5f,0.5f) );
+	mStartButton->setPosition( Vec2(winSize.width/2, winSize.height/4)  );
+	mStartButton->setAnchorPoint( Vec2(0.5f,0.5f) );
 	mStartButton->setOpacity(0);
     CCFadeTo*  fadeButton = CCFadeTo::create(INTRO_BUTTON_FADE_IN_DELAY, 255);
     mStartButton->runAction(fadeButton);
@@ -81,13 +81,13 @@ void PEIntroLayer::startButton(float in)
 	this->addChild(mStartButton,2);
 }
 
-void PEIntroLayer::introOut(CCObject* in)
+void PEIntroLayer::introOut(Ref* in)
 {
-	//CCScene *nextScene = GameLayer::scene();
-	CCScene *nextScene = PEMain::scene();
+	//Scene *nextScene = GameLayer::scene();
+	Scene *nextScene = PEMain::scene();
 	if(nextScene != NULL)
 	{
 		CCTransitionScene* pTran = CCTransitionFade::create(INTRO_FADE_OUT_DELAY, nextScene);
-		CCDirector::sharedDirector()->replaceScene(pTran);
+		Director::getInstance()->replaceScene(pTran);
 	}
 }

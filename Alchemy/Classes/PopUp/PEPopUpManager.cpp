@@ -33,13 +33,13 @@ enum GAME_STATUS
 
 bool PEPopUpManager::init()
 {
-	if ( !CCLayer::init() ) 
+	if ( !Layer::init() )
     {
         return false;
     }
 	autorelease();
 	/* notification Receiver */
-	CCNotificationCenter::sharedNotificationCenter()->addObserver(this,	callfuncO_selector(PEPopUpManager::scene_popup),"scene_popup", NULL);
+	__NotificationCenter::getInstance()->addObserver(this,	callfuncO_selector(PEPopUpManager::scene_popup),"scene_popup", NULL);
 	isPause = false;
 
 	return true;
@@ -47,16 +47,16 @@ bool PEPopUpManager::init()
 
 void PEPopUpManager::onExit()
 {
-	CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, "scene_popup");
+	__NotificationCenter::getInstance()->removeObserver(this, "scene_popup");
 }
 
-void PEPopUpManager::scene_popup(CCObject *obj){
+void PEPopUpManager::scene_popup(Ref *obj){
 
-	CCString *pParam=(CCString*)obj;
-	CCLayer* popup;
+	__String *pParam=(__String*)obj;
+	Layer* popup;
 	int popup_call_index = pParam->intValue();
 
-	CCLog("notification %d", pParam->intValue());
+	log("notification %d", pParam->intValue());
 
 	if(!isPause)
 	{
@@ -66,7 +66,7 @@ void PEPopUpManager::scene_popup(CCObject *obj){
 		{
 			case POPUP_STOP:
 				(pListener_pause->*pause)();
-				CCDirector::sharedDirector()->pause();
+				Director::getInstance()->pause();
 				popup= new PEPopupStop();
 				popup->init();
 				this->addChild(popup);
@@ -74,7 +74,7 @@ void PEPopUpManager::scene_popup(CCObject *obj){
 			
 			case POPUP_FAIL:
 				(pListener_pause->*pause)();
-				CCDirector::sharedDirector()->pause();
+				Director::getInstance()->pause();
 				popup = new PEPopupFail();
 				popup->init();
 				addChild(popup);
@@ -98,23 +98,23 @@ void PEPopUpManager::scene_popup(CCObject *obj){
 		{
 			(pListener_resume->*resume)();
 			isPause = false;
-			CCDirector::sharedDirector()->resume();
+			Director::getInstance()->resume();
 		}
 		
 		if(popup_call_index == POPUP_END)
-			CCDirector::sharedDirector()->end();
+			Director::getInstance()->end();
 	}
 
 
 }
 
-void PEPopUpManager::setResume(CCObject* target, SEL_Resume pResume)
+void PEPopUpManager::setResume(Ref* target, SEL_Resume pResume)
 {
 	pListener_resume = target;
 	resume = pResume;
 }
 
-void PEPopUpManager::setPause(CCObject* target, SEL_Resume pPause)
+void PEPopUpManager::setPause(Ref* target, SEL_Resume pPause)
 {
 	pListener_pause = target;
 	pause = pPause;

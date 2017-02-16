@@ -3,7 +3,7 @@
 #include "../Object/PEObject.h"
 
 #define FIELD_BOUNDARY_Y	435.0f
-#define CALC_ENEMY_POS(x, y) ccp(130.0f + x * 164.0f, BOARD_HEIGHT_EDGE + y * 148.0f)
+#define CALC_ENEMY_POS(x, y) Vec2(130.0f + x * 164.0f, BOARD_HEIGHT_EDGE + y * 148.0f)
 
 enum FIELD_Zorder
 {
@@ -12,7 +12,7 @@ enum FIELD_Zorder
 };
 
 bool Field::init() {
-	if(CCLayer::init() == false) {
+	if(Layer::init() == false) {
 		return false;
 	}
 
@@ -20,9 +20,9 @@ bool Field::init() {
 	m_move_to_y = 0;
 	m_items.clear();
 
-	m_pBackground = CCSprite::create("Layer/lBackground.png");
-	m_pBackground->setPosition(ccp(0.0f, 100.0f));
-	m_pBackground->setAnchorPoint(ccp(0.0f, 0.0f));
+	m_pBackground = Sprite::create("Layer/lBackground.png");
+	m_pBackground->setPosition(Vec2(0.0f, 100.0f));
+	m_pBackground->setAnchorPoint(Vec2(0.0f, 0.0f));
 	background_size = m_pBackground->getContentSize();
 	addChild(m_pBackground, FIELD_Z_BACKGROUND);
 
@@ -34,17 +34,17 @@ bool Field::init() {
 
 	broadPos = PEBoardPos::getInstance();
 	broadPos->init();
-	m_winSize = CCDirector::sharedDirector()->getWinSize();
+	m_winSize = Director::getInstance()->getWinSize();
 	m_monsterSpawnTime = PETime::GetTime();
 	
 	m_pot = Pot::create();
-	m_pot->setPosition(ccp(540.0f, 1539.0f));
+	m_pot->setPosition(Vec2(540.0f, 1539.0f));
 	m_pBackground->addChild(m_pot);
 
 	/* Door Sprite */
-	CCSprite* door = CCSprite::create("Layer/lDoor.png");
-	door->setAnchorPoint(ccp(0.0f, 1.0f));
-	door->setPosition(ccp(background_size.width/2-195, 239.0f));
+	Sprite* door = Sprite::create("Layer/lDoor.png");
+	door->setAnchorPoint(Vec2(0.0f, 1.0f));
+	door->setPosition(Vec2(background_size.width/2-195, 239.0f));
 	m_pBackground->addChild(door);
 	
 	for(int x=0; x<COL_NUM; x++)
@@ -155,16 +155,16 @@ void Field::update(float dt) {
 	}
 }
 
-void Field::removeBall(CCObject* pObject)
+void Field::removeBall(Ref* pObject)
 {
 	Monster* pMonster = (Monster*)pObject;
 	pMonster->ball->stopAllActions();
 }
 
-void Field::createMonster(CCObject* pObject)
+void Field::createMonster(Ref* pObject)
 {
 	Monster* pMonster = (Monster*)pObject;
-	pMonster->getAnimation()->playWithIndex(0, -1, -1, -1, 10000);
+	pMonster->getAnimation()->playWithIndex(0, -1, -1);
 	pMonster->setVisible(true);
 	pMonster->move(1.0f);
 	m_pCollision->addMonster(pMonster);
@@ -174,10 +174,10 @@ void Field::createMonster(CCObject* pObject)
 	pMonster->ball->runAction(CCSequence::create(pDelayTime, pCallFuncO, NULL));
 }
 
-void Field::openBall(CCObject* pObject)
+void Field::openBall(Ref* pObject)
 {
 	Monster* pMonster = (Monster*)pObject;
-	pMonster->ball->getAnimation()->playWithIndex(2, -1, -1, 0, 0);
+	pMonster->ball->getAnimation()->playWithIndex(2, -1, -1);
 	
 	CCDelayTime* pDelayTime = CCDelayTime::create(0.5f);
 	CCCallFuncO* pCallFuncO =  CCCallFuncO::create(this, callfuncO_selector(Field::createMonster), pObject);
@@ -210,23 +210,23 @@ void Field::SpawnMonsters(int monster_index, float speed_scale)
 	
 	// create Ball object
 	pMonster->ball  = CCArmature::create("MonsterBall");
-	pMonster->ball->getAnimation()->playWithIndex(0, -1, -1, -1, 10000);
-	pMonster->ball->setPosition(ccp(background_size.width/2,1800.f));
+	pMonster->ball->getAnimation()->playWithIndex(0, -1, -1);
+	pMonster->ball->setPosition(Vec2(background_size.width/2,1800.f));
 	
 	ccBezierConfig bezierConfig;
 	if(background_size.width/2 > pos.x)
 	{
-		bezierConfig.controlPoint_1 = ccp((background_size.width/2*2 + pos.x)/3, 1900.0f);
-		bezierConfig.controlPoint_2 = ccp((background_size.width/2 + pos.x*2)/3, 1900.0f);
+		bezierConfig.controlPoint_1 = Vec2((background_size.width/2*2 + pos.x)/3, 1900.0f);
+		bezierConfig.controlPoint_2 = Vec2((background_size.width/2 + pos.x*2)/3, 1900.0f);
 	}
 	else
 	{
-		bezierConfig.controlPoint_1 = ccp((background_size.width/2*2 + pos.x)/3, 1900.0f);
-		bezierConfig.controlPoint_2 = ccp((background_size.width/2 + pos.x*2)/3, 1900.0f);
+		bezierConfig.controlPoint_1 = Vec2((background_size.width/2*2 + pos.x)/3, 1900.0f);
+		bezierConfig.controlPoint_2 = Vec2((background_size.width/2 + pos.x*2)/3, 1900.0f);
 	}
 	bezierConfig.endPosition = pos;
 	CCBezierTo* pBezier = CCBezierTo::create(ball_duration, bezierConfig);
-	CCCallFuncO* pCallFuncO =  CCCallFuncO::create(this, callfuncO_selector(Field::openBall), (CCObject*)pMonster);
+	CCCallFuncO* pCallFuncO =  CCCallFuncO::create(this, callfuncO_selector(Field::openBall), (Ref*)pMonster);
 	pMonster->ball->runAction(CCSequence::create(pBezier, pCallFuncO, NULL));
 	
 	addChild(pMonster);
@@ -366,7 +366,7 @@ bool Field::peTouchEndFromMix(CCTouch* pTouch, PEObject* object)
 
 void Field::onExit()
 {
-	CCLog("Field - on Exit()");
+	log("Field - on Exit()");
 	this->removeFromParentAndCleanup(true);
 }
 
@@ -392,18 +392,18 @@ Pot* Pot::create()
 bool Pot::init(void)
 {
 	/* Pot animation Init */
-	magic_circle = CCSprite::create("Layer/lPod/lMagicCircle.png");
+	magic_circle = Sprite::create("Layer/lPod/lMagicCircle.png");
 	addChild(magic_circle);
 	
-	magic_circle_back = CCSprite::create("Layer/lPod/lMagicCircleBack.png");
+	magic_circle_back = Sprite::create("Layer/lPod/lMagicCircleBack.png");
 	addChild(magic_circle_back);
 	
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(
                                                                             "Layer/lPod/lPot0.png", "Layer/lPod/lPot0.plist", "Layer/lPod/lPot.ExportJson");
 	pot = CCArmature::create("lPot");
-	pot->setAnchorPoint(ccp(0.5f, 0.0f));
+	pot->setAnchorPoint(Vec2(0.5f, 0.0f));
 	pot->setPosition(0, -50.0f);
- 	pot->getAnimation()->playWithIndex(0, -1, -1, -1, 10000);
+ 	pot->getAnimation()->playWithIndex(0, -1, -1);
 	addChild(pot);
 	
 	r = 134;

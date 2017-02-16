@@ -24,7 +24,7 @@ struct PE_s_resource
 {
 	unsigned char index;
 	unsigned char circle;
-	unsigned char type;   /* eAlchemyType */
+	char type;   /* eAlchemyType */
 	unsigned char res1;   /* Index */
 	unsigned char res2;   /* Index */
 	bool block;

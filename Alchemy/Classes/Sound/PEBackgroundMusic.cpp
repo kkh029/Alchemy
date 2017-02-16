@@ -33,7 +33,7 @@ PEBackgroundMusic::~PEBackgroundMusic()
 PEBackgroundMusic* PEBackgroundMusic::sharedPEBackgroundMusic()
 {
     static PEBackgroundMusic s_SharedPEBackgroundMusic;
-    s_SharedPEBackgroundMusic.onoff = CCUserDefault::sharedUserDefault()->getBoolForKey("BGM");
+    s_SharedPEBackgroundMusic.onoff = UserDefault::sharedUserDefault()->getBoolForKey("BGM");
     return &s_SharedPEBackgroundMusic;
 }
 
@@ -82,7 +82,7 @@ void PEBackgroundMusic::PE_set_onoff(bool flag)
     onoff = flag;
     if(!onoff)
         SimpleAudioEngine::sharedEngine()->stopBackgroundMusic(true);
-    CCUserDefault::sharedUserDefault()->setBoolForKey("BGM", onoff);
+    UserDefault::sharedUserDefault()->setBoolForKey("BGM", onoff);
 }
 
 bool PEBackgroundMusic::PE_get_onoff(void)

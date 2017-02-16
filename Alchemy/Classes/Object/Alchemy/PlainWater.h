@@ -32,8 +32,8 @@ private:
 	bool isAttack;
 	bool fire_flag;
 	
-	std::vector<CCSprite*> m_bullets;
-	CCSprite* FireBullet();
+	std::vector<Sprite*> m_bullets;
+	Sprite* FireBullet();
 };
 
 #endif /* defined(__Alchemy__PlainWater__) */

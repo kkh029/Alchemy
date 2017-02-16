@@ -28,7 +28,7 @@ private:
 	int isAttack;
 	Size m_winSize;
 	int m_ani_stage;
-	cc_timeval event_time[2];
+	_STRUCT_TIMEVAL event_time[2];
 };
 
 #endif /* defined(__Alchemy__Flame__) */

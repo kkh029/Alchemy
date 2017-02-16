@@ -3,19 +3,19 @@
 
 #include "Monster.h"
 
-class MonsterIcon : public PEObject, public CCSprite
+class MonsterIcon : public PEObject, public Sprite
 {
 public:
 	MonsterIcon(unsigned char index);
 	~MonsterIcon();
 
 	static MonsterIcon* create(unsigned char index);
-	static CCSpriteBatchNode* PE_MONSTER_ICON_getBatchNode(void);
+	static SpriteBatchNode* PE_MONSTER_ICON_getBatchNode(void);
 
 protected:
 
 private:
-	static CCSpriteBatchNode* m_pBatchNode;
+	static SpriteBatchNode* m_pBatchNode;
 	static void PE_makeResource();
 };
 

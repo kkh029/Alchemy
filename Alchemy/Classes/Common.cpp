@@ -10,12 +10,12 @@ std::string Common::GetFileName(const char* name, int type){
 			result.append("o");
 			break;
 		default:
-			CCLog("Common::GetFileName Type Check : >%d<", type);
+			log("Common::GetFileName Type Check : >%d<", type);
 	}
 
 	result.append(name);
 	result.append(".png");
-	CCLog("GetFileName >%s<", result.c_str());
+	log("GetFileName >%s<", result.c_str());
 	return result;
 }
 
@@ -24,7 +24,7 @@ std::string Common::GetFileName(const char* name){
 	result.append("i");
 	result.append(name);
 	result.append(".png");
-	CCLog("GetFileName >%s<", result.c_str());
+	log("GetFileName >%s<", result.c_str());
 	return result;
 }
 
@@ -33,12 +33,12 @@ float Common::ComputeX(float x) {
 }
 
 float Common::ComputeY(float y) {
-	//return CCDirector::sharedDirector()->getWinSize().height - floorf(y * BOARD_HEIGHT + 710.0f);
+	//return Director::getInstance()->getWinSize().height - floorf(y * BOARD_HEIGHT + 710.0f);
 	return floorf(y * BOARD_HEIGHT + 705.0f);
 }
 
 Vec2 Common::ComputeXY(float x, float y) {
-	return ccp(ComputeX(x), ComputeY(y));
+	return Vec2(ComputeX(x), ComputeY(y));
 }
 
 int Common::ComputeBoardX(float x) {

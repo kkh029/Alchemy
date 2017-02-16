@@ -1,6 +1,6 @@
 #include "MonsterIcon.h"
 
-CCSpriteBatchNode* MonsterIcon::m_pBatchNode;
+SpriteBatchNode* MonsterIcon::m_pBatchNode;
 
 MonsterIcon::MonsterIcon(unsigned char index) : PEObject() {
 	if(m_pBatchNode == NULL)
@@ -9,7 +9,7 @@ MonsterIcon::MonsterIcon(unsigned char index) : PEObject() {
 	char icon_name[20];
 	sprintf(icon_name, "i%s.png", Monster::monster_table[index].name);
 
-	CCSpriteFrame* pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(icon_name);
+	SpriteFrame* pFrame = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(icon_name);
 	initWithSpriteFrame(pFrame);
 	autorelease();
 }
@@ -25,11 +25,11 @@ MonsterIcon* MonsterIcon::create(unsigned char index) {
 }
 
 void MonsterIcon::PE_makeResource() {
-	MonsterIcon::m_pBatchNode = CCSpriteBatchNode::create("Monster/Monster.png");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Monster/Monster.plist");
+	MonsterIcon::m_pBatchNode = SpriteBatchNode::create("Monster/Monster.png");
+	SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Monster/Monster.plist");
 }
 
-CCSpriteBatchNode* MonsterIcon::PE_MONSTER_ICON_getBatchNode() {
+SpriteBatchNode* MonsterIcon::PE_MONSTER_ICON_getBatchNode() {
 	if(MonsterIcon::m_pBatchNode == NULL)
 		MonsterIcon::PE_makeResource();
 	return MonsterIcon::m_pBatchNode;

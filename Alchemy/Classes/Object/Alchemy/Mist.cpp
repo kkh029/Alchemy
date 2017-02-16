@@ -40,32 +40,30 @@ Alchemy* Mist::create(PEObject* obj)
 
 void Mist::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
 
-	CCTime::gettimeofdayCocos2d(&event_time[TIME_START], NULL);
-	ani->playWithIndex(FADE_IN_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX_INDEX);
+	gettimeofday(&event_time[TIME_START], NULL);
+	ani->playWithIndex(FADE_IN_INDEX, -1, -1);
 	m_ani_stage = FADE_IN_INDEX;
 }
 
 
 bool Mist::PE_update(unsigned int flag) {
-	CCArmatureAnimation* ani= getAnimation();
-	CCTime::gettimeofdayCocos2d(&event_time[TIME_END], NULL);
-	double diffTime = CCTime::timersubCocos2d(
-		&event_time[TIME_START],
-		&event_time[TIME_END] );
+	ArmatureAnimation* ani= getAnimation();
+	gettimeofday(&event_time[TIME_END], NULL);
+    double diffTime = time_interval(event_time[TIME_START], event_time[TIME_END]);
 
 	if((m_ani_stage == FADE_IN_INDEX || ani->getCurrentFrameIndex() == 40))
 	{
-		ani->playWithIndex(DEFAULT_INDEX, -1, -1, 1, 0);
+		ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 	}
 	if(diffTime > STAY_TIME)
 	{
-		ani->playWithIndex(FADE_OUT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX_INDEX);
+		ani->playWithIndex(FADE_OUT_INDEX, -1, -1);
 		return false;
 	}
 	return true;

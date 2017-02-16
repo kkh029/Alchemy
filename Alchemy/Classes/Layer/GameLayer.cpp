@@ -14,8 +14,8 @@ PEIcon* GameLayer::m_PEIcon;
 PEPopUpManager* GameLayer::m_PEPopupManager;
 int GameLayer::m_stage;
 
-CCScene* GameLayer::scene(int stage){
-	CCScene* pScene = CCScene::create();
+Scene* GameLayer::scene(int stage){
+	Scene* pScene = Scene::create();
 	GameLayer* pGameLayer = new GameLayer();
 	pGameLayer->init(stage);
 	pScene->addChild(pGameLayer);
@@ -24,7 +24,7 @@ CCScene* GameLayer::scene(int stage){
 }
 
 bool GameLayer::init(int stage) {
-	if(CCLayer::init() == false) {
+	if(Layer::init() == false) {
 		return false;
 	}
 	
@@ -46,7 +46,7 @@ bool GameLayer::init(int stage) {
 
 	m_MixPanel = new MixPanel();
 	m_MixPanel->init();
-	m_MixPanel->setContentSize(ccp(1080.0f, 441.0f));
+	m_MixPanel->setContentSize(Size(1080.0f, 441.0f));
 	m_MixPanel->setField(m_Field);
 	m_MixPanel->setPEIcon(m_PEIcon);
 	addChild(m_MixPanel, 2);
@@ -70,13 +70,15 @@ bool GameLayer::init(int stage) {
 	return true;
 }
 
+/*
 void GameLayer::keyBackClicked(void)
 {
 	char buf[5];
 	sprintf(buf, "%d", POPUP_STOP);
-	CCString* popParam=CCString::create(buf);
-	CCNotificationCenter::sharedNotificationCenter()->postNotification("scene_popup", popParam);
+	__String* popParam=__String::create(buf);
+	__NotificationCenter::getInstance()->postNotification("scene_popup", popParam);
 }
+*/
 
 void GameLayer::GamePause(void)
 {
@@ -91,7 +93,7 @@ void GameLayer::GameResume(void)
 	m_Field->setTouchEnabled(true);
 	m_PEIcon->m_setTouchEnabled(true);
 }
-/*
+
 void GameLayer::PrepareResources() {
 	string Alchemy_folder = "Alchemy/";
 	string png_expand = "0.png";
@@ -131,8 +133,8 @@ void GameLayer::PrepareResources() {
 
 	Alchemy::PE_makeResource();
 }
-*/
-/*
+
+
 void GameLayer::PrepareMonsters() {
 	string Monster_folder = "Monster/";
 	string png_expand = "0.png";
@@ -165,7 +167,7 @@ void GameLayer::PrepareMonsters() {
 		CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(png_path, plist_path, json_path);
 	}
 }
-*/
+
 void GameLayer::onExit()
 {
 	PRINT_LOG("GameLayer - on Exit()");

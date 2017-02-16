@@ -91,10 +91,8 @@ bool Steam::PE_update(unsigned int flag) {
 	}
 	
 	gettimeofday(&life_time[TIME_END], NULL);
-	diffTime = CCTime::timersubCocos2d(
-									   &life_time[TIME_START],
-									   &life_time[TIME_END] );
-	
+    diffTime = time_interval(life_time[TIME_START], life_time[TIME_END] );
+    
 	ani = getAnimation();
 	if(m_ani_stage == FADE_IN_INDEX && ani->getCurrentFrameIndex() == 40)
 	{

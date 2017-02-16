@@ -75,8 +75,8 @@ char main_card_file[4][50] =
 	NULL
 };
 
-CCScene* PEMain::scene(){
-	CCScene* pScene = CCScene::create();
+Scene* PEMain::scene(){
+	Scene* pScene = Scene::create();
 	PEMain* pPEMain = new PEMain();
 	pPEMain->init();
 	pScene->addChild(pPEMain);
@@ -120,26 +120,26 @@ float main_card_pos_x[ICON_MAX] =
 
 void PEMain::startMain(float in)
 {
-	CCSprite* background = CCSprite::create("Layer/lMainUi/IMainBackground.png");
-	background->setPosition(Vec2Zero);
-	background->setAnchorPoint(ccp(0.0f, 0.0f));
+	Sprite* background = Sprite::create("Layer/lMainUi/IMainBackground.png");
+	background->setPosition(Vec2::ZERO);
+	background->setAnchorPoint(Vec2(0.0f, 0.0f));
 	addChild(background);
 	
-	main_card = CCSprite::create();
+	main_card = Sprite::create();
 	
 	for(int i=0; i<ICON_MAX; i++)
 	{
-		main_card_array[i] = CCSprite::create(main_card_file[i]);
+		main_card_array[i] = Sprite::create(main_card_file[i]);
 		if(main_card_array[i] != NULL)
 		{
-			main_card_array[i] ->setPosition(ccp(main_card_pos_x[i], 1000.0f));
+			main_card_array[i] ->setPosition(Vec2(main_card_pos_x[i], 1000.0f));
 			main_card->addChild(main_card_array[i]);
 		}
 	}
 	addChild(main_card);
 	
 	Size main_size = main_card_array[ICON_STAGE]->getContentSize();
-	main_left_top = ccp(main_card_pos_x[ICON_STAGE] - main_size.width/2, 1000.0f - main_size.height/2);
+	main_left_top = Vec2(main_card_pos_x[ICON_STAGE] - main_size.width/2, 1000.0f - main_size.height/2);
 	
 	init_Main_stageBtn(1);
 	
@@ -178,7 +178,7 @@ void PEMain::init_Main_stageBtn(int stage_num_start)
 				btn_enable = false;
 		
 			stage_btn[j*3 + i] = PEStageBtn::create(stage_num, btn_enable);
-			stage_btn[j*3 + i]->setPosition(ccp(main_panel_size.width/2 + 290.0f*(i-1), main_stage_btn_pos_y[j]));
+			stage_btn[j*3 + i]->setPosition(Vec2(main_panel_size.width/2 + 290.0f*(i-1), main_stage_btn_pos_y[j]));
 			main_card_array[ICON_STAGE]->addChild(stage_btn[j*3 + i]);
 			
 
@@ -203,16 +203,16 @@ void PEMain::init_topBtn()
 	
 	top_btn = CCMenu::create(top_back, top_setting, NULL);
 	top_btn->alignItemsHorizontallyWithPadding(10.0f);
-    top_btn->setPosition(ccp(MAIN_TOP_BACK_X, MAIN_TOP_BACK_Y));
+    top_btn->setPosition(Vec2(MAIN_TOP_BACK_X, MAIN_TOP_BACK_Y));
 	addChild(top_btn);
 }
 
 Vec2 bottom_select_pos[ICON_MAX] =
 {
-	ccp(113.0f, 135.0f),
-	ccp(325.0f, 135.0f),
-	ccp(537.0f, 135.0f),
-	ccp(749.0f, 135.0f),
+	Vec2(113.0f, 135.0f),
+	Vec2(325.0f, 135.0f),
+	Vec2(537.0f, 135.0f),
+	Vec2(749.0f, 135.0f),
 };
 
 void PEMain::init_bottonBtn()
@@ -221,20 +221,20 @@ void PEMain::init_bottonBtn()
 	
 	for(i=0; i<ICON_MAX; i++)
 	{
-		bottom_unselect_icon_array[i] = CCSprite::create(bottom_unselected_icon[i]);
+		bottom_unselect_icon_array[i] = Sprite::create(bottom_unselected_icon[i]);
 		bottom_unselect_icon_array[i]->setPosition(bottom_select_pos[i]);
 		addChild(bottom_unselect_icon_array[i]);
 	}
 	
 	for(i=0; i<ICON_MAX; i++)
 	{
-		bottom_select_icon_array[i] = CCSprite::create(bottom_selected_icon[i]);
+		bottom_select_icon_array[i] = Sprite::create(bottom_selected_icon[i]);
 		bottom_select_icon_array[i]->setPosition(bottom_select_pos[i]);
 		bottom_select_icon_array[i]->setVisible(false);
 		addChild(bottom_select_icon_array[i]);
 	}
 	
-	bottom_select_stroke = CCSprite::create("Layer/lMainUi/IMainBottomSelectStroke.png");
+	bottom_select_stroke = Sprite::create("Layer/lMainUi/IMainBottomSelectStroke.png");
 	addChild(bottom_select_stroke,10);
 	
 	bottom_select_icon_array[selected_bottom_icon]->setVisible(true);
@@ -242,12 +242,12 @@ void PEMain::init_bottonBtn()
 	
 	for(i=0; i<ICON_MAX; i++)
 	{
-		main_title_array[i] = CCSprite::create(main_title_file[i]);
+		main_title_array[i] = Sprite::create(main_title_file[i]);
 		if( main_title_array[i] == NULL)
 			continue;
 		
-		main_title_array[i]->setPosition(ccp(MAIN_TITLE_X,MAIN_TITLE_Y));
-		main_title_array[i]->setAnchorPoint(ccp(1.0f, 0.0f));
+		main_title_array[i]->setPosition(Vec2(MAIN_TITLE_X,MAIN_TITLE_Y));
+		main_title_array[i]->setAnchorPoint(Vec2(1.0f, 0.0f));
 		addChild(main_title_array[i]);
 		main_title_array[i]->setVisible(false);
 	}
@@ -255,7 +255,7 @@ void PEMain::init_bottonBtn()
 	main_title_array[selected_bottom_icon]->setVisible(true);
 }
 
-void PEMain::back(CCObject* pSender)
+void PEMain::back(Ref* pSender)
 {
     PESoundEffect::sharedPESoundEffect()->PE_play(PESoundEffect::SE_BUTTON_1);
 	keyBackClicked();
@@ -268,7 +268,7 @@ void PEMain::resume(void)
 	top_btn->setTouchEnabled(true);
 }
 
-void PEMain::setting(CCObject* pSender)
+void PEMain::setting(Ref* pSender)
 {
     PESoundEffect::sharedPESoundEffect()->PE_play(PESoundEffect::SE_BUTTON_1);
 	PEPopUpSetting* pPopUp = new PEPopUpSetting();
@@ -347,23 +347,23 @@ void PEMain::title_out()
 		return;
 	}
 	
-	CCMoveBy* pMoveBy = CCMoveBy::create(TITLE_CHANGE_DURATION, ccp(diff_x, 0.0f));
+	CCMoveBy* pMoveBy = CCMoveBy::create(TITLE_CHANGE_DURATION, Vec2(diff_x, 0.0f));
 	CCFadeTo* actionFadeTo = CCFadeTo::create(TITLE_CHANGE_DURATION,0);
 	CCSpawn* pSpwan = CCSpawn::create(pMoveBy, actionFadeTo, NULL);
 	CCCallFuncO* pCallFuncO =  CCCallFuncO::create(this, callfuncO_selector(PEMain::title_in), this);
 	main_title_array[last_main_card]->runAction(CCSequence::create(pSpwan, pCallFuncO, NULL));
 }
 
-void PEMain::title_in(CCObject* obj)
+void PEMain::title_in(Ref* obj)
 {
 	float diff_x = (last_main_card < current_main_card)?-250:250;
 	
 	if(main_title_array[current_main_card] != NULL)
 	{
 		main_title_array[current_main_card]->setVisible(true);
-		main_title_array[current_main_card]->setPosition(ccp(MAIN_TITLE_X - diff_x, MAIN_TITLE_Y));
+		main_title_array[current_main_card]->setPosition(Vec2(MAIN_TITLE_X - diff_x, MAIN_TITLE_Y));
 		
-		CCMoveBy* pMoveBy_select = CCMoveBy::create(TITLE_CHANGE_DURATION, ccp(diff_x, 0.0f));
+		CCMoveBy* pMoveBy_select = CCMoveBy::create(TITLE_CHANGE_DURATION, Vec2(diff_x, 0.0f));
 		CCFadeIn* actionFadeIn_select = CCFadeIn::create(TITLE_CHANGE_DURATION);
 		CCSpawn* pSpwan_select = CCSpawn::create(pMoveBy_select, actionFadeIn_select,NULL);
 		main_title_array[current_main_card]->runAction(pSpwan_select);
@@ -382,7 +382,7 @@ void PEMain::changeMainCard()
         PESoundEffect::sharedPESoundEffect()->PE_play(PESoundEffect::SE_WHOOSH);
         
 		float diff = (main_card_pos_x[selected_bottom_icon] - 540.0f) + main_card->getPosition().x;
-		CCMoveBy* pMoveBy = CCMoveBy::create(TITLE_CHANGE_DURATION, ccp(-diff, 0.0f));
+		CCMoveBy* pMoveBy = CCMoveBy::create(TITLE_CHANGE_DURATION, Vec2(-diff, 0.0f));
 		
 		current_main_card = selected_bottom_icon;
 		bottom_card_enable = false;
@@ -396,11 +396,11 @@ void PEMain::changeMainCard()
 void PEMain::stage_select(int stage)
 {
 	PEBackgroundMusic::sharedPEBackgroundMusic()->PE_stop();
-	CCScene *nextScene = GameLayer::scene(stage);
+	Scene *nextScene = GameLayer::scene(stage);
 	if(nextScene != NULL)
 	{
 		CCTransitionScene* pTran = CCTransitionFade::create(FADE_OUT_DELAY, nextScene);
-		CCDirector::sharedDirector()->replaceScene(pTran);
+		Director::getInstance()->replaceScene(pTran);
 	}
 }
 
@@ -411,14 +411,14 @@ bool PEMain::PE_check_bottom_btn(Vec2 pos)
 
 	for(i=0; i<ICON_MAX; i++)
 	{
-		if(bottom_unselect_icon_array[i]->boundingBox().containsPoint(pos) )
+		if(bottom_unselect_icon_array[i]->getBoundingBox().containsPoint(pos) )
 		{
 			Vec2 strok_pos = bottom_select_stroke->getPosition();
 			if(tracking_bottom_icon != i)
 			{
 				float diff_x = bottom_select_pos[i].x - strok_pos.x;
 				float duration = 0.1f;
-				CCMoveBy* pMoveBy = CCMoveBy::create(duration, ccp(diff_x, 0.0f));
+				CCMoveBy* pMoveBy = CCMoveBy::create(duration, Vec2(diff_x, 0.0f));
 				CCCallFuncO* pCallFuncO =  CCCallFuncO::create(this, callfuncO_selector(PEMain::onEndOfSelecctorMoving), this);
 				bottom_select_stroke->runAction(CCSequence::create(pMoveBy, pCallFuncO, NULL));
 				tracking_bottom_icon = i;
@@ -444,7 +444,7 @@ int PEMain::check_touched_btn(Vec2 pos)
 	for(i=0; i<12; i++)
 	{
 		if( stage_btn[i]->get_valid()
-			&& stage_btn[i]->get_boundingbox().containsPoint( ccp(pos.x, pos.y) ) )
+			&& stage_btn[i]->get_boundingbox().containsPoint( Vec2(pos.x, pos.y) ) )
 		{
 			stage_btn[i]->toggle_btn(true);	
 
@@ -455,11 +455,10 @@ int PEMain::check_touched_btn(Vec2 pos)
 	return -1;
 }
 
-void PEMain::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+void PEMain::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
-	CCTouch* pTouch = (CCTouch*)pTouches->anyObject();
-	int touchId = pTouch->getID();
-	Vec2 pos = pTouch->getLocation();
+	int touchId = touches[0]->getID();
+	Vec2 pos = touches[0]->getLocation();
 
 	if(touched_id != -1)
 		return;
@@ -481,10 +480,9 @@ void PEMain::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 	return;
 }
 
-void PEMain::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+void PEMain::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
-	CCTouch* pTouch;
-	CCSetIterator iter;
+    Touch* touch;
 	Vec2 pos;
     bool selected_touch = false;
 
@@ -493,12 +491,12 @@ void PEMain::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 		|| !bottom_btn_selected)
     	return;
 
-    for(iter = pTouches->begin(); iter != pTouches->end(); ++iter)
+    for(auto& pTouch : touches)
     {
-    	pTouch = (CCTouch *)(*iter);
     	if(touched_id == pTouch->getID())
     	{
     		selected_touch = true;
+            touch = pTouch;
     		break;
     	}
     }
@@ -506,14 +504,14 @@ void PEMain::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     if(!selected_touch)
     	return;
 
-	pos = pTouch->getLocation();
+	pos = touch->getLocation();
 	bottom_ani_playing = PE_check_bottom_btn(pos);
 }
 
-void PEMain::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+void PEMain::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
 	int i;
-	CCTouch* pTouch = (CCTouch*)pTouches->anyObject();
+	Touch* pTouch = (Touch*)touches[0];
 	Vec2 pos = pTouch->getLocation();
 	int touchId = pTouch->getID();
 
@@ -524,7 +522,7 @@ void PEMain::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 		{
 			for(i=0; i<ICON_MAX; i++)
 			{
-				if(bottom_unselect_icon_array[i]->boundingBox().containsPoint(pos))
+				if(bottom_unselect_icon_array[i]->getBoundingBox().containsPoint(pos))
 				{
 					bottom_select_stroke->stopAllActions();
 					bottom_select_stroke->setPosition(bottom_select_pos[i]);
@@ -561,12 +559,13 @@ void PEMain::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 	}
 }
 
-void PEMain::onEndOfSelecctorMoving(CCObject* obj)
+void PEMain::onEndOfSelecctorMoving(Ref* obj)
 {
 	bottom_ani_playing = false;
 }
 
 bool back_key_clicked = false;
+/*
 void PEMain::keyBackClicked(void)
 {
 	PESoundEffect::sharedPESoundEffect()->PE_play(PESoundEffect::SE_BUTTON_1);
@@ -583,9 +582,10 @@ void PEMain::keyBackClicked(void)
 			this->scheduleOnce(schedule_selector(PEMain::back_key_clicked_reset), 0.5f);
 		}
 		else
-			CCDirector::sharedDirector()->end();
+			Director::getInstance()->end();
 	}
 }
+*/
 
 void PEMain::back_key_clicked_reset(float in)
 {
@@ -615,73 +615,73 @@ void PEStageBtn::init_btn(int index, bool valid)
 	isTouched = false;
 	is_valid = valid;
 	stars = load_stage_stars();
-	touched_btn_back = CCSprite::create("Layer/lMainUi/IStageUi/IMainStageBtn.png");
+	touched_btn_back = Sprite::create("Layer/lMainUi/IStageUi/IMainStageBtn.png");
 	addChild(touched_btn_back);
 	if(!is_valid)
 	{
 		touched_btn_back->setOpacity(128);
 	}
 
-	touched_btn_back_select = CCSprite::create("Layer/lMainUi/IStageUi/IMainStageBtn_select.png");
+	touched_btn_back_select = Sprite::create("Layer/lMainUi/IStageUi/IMainStageBtn_select.png");
 	touched_btn_back_select->setVisible(false);
-	touched_btn_back_select->setAnchorPoint(ccp(0.0f, 0.0f));
+	touched_btn_back_select->setAnchorPoint(Vec2(0.0f, 0.0f));
 	touched_btn_back->addChild(touched_btn_back_select);
 
 	Size main_button_size = touched_btn_back->getContentSize();
 	
 	stage_num_text = makeStageNumber(index, &main_num_text_size, is_valid);
-	stage_num_text->setPosition(ccp(main_button_size.width/2-main_num_text_size/2 - 3, 95));
+	stage_num_text->setPosition(Vec2(main_button_size.width/2-main_num_text_size/2 - 3, 95));
 	touched_btn_back->addChild(stage_num_text);
 
 	// show stage stars
 	char buf[15];
 	sprintf(buf, "stage%d", index);
-	int stars = CCUserDefault::sharedUserDefault()->getIntegerForKey(buf);
-	CCLog("stage:%d - star:%d\n", index, stars);
+	int stars = UserDefault::sharedUserDefault()->getIntegerForKey(buf);
+	log("stage:%d - star:%d\n", index, stars);
 	if(stars > 0)
 	{
 		for(int i=0; i<stars; i++)
 		{
 			char path[50];
 			sprintf(path, "Layer/lMainUi/IStageUi/IMainStageBtn_star%d.png", i+1);
-			CCSprite* main_stageBtn_star = CCSprite::create(path);
-			main_stageBtn_star->setPosition(ccp(0.0f, 0.0f));
-			main_stageBtn_star->setAnchorPoint(ccp(0.0f, 0.0f));
+			Sprite* main_stageBtn_star = Sprite::create(path);
+			main_stageBtn_star->setPosition(Vec2(0.0f, 0.0f));
+			main_stageBtn_star->setAnchorPoint(Vec2(0.0f, 0.0f));
 			touched_btn_back->addChild(main_stageBtn_star);
 		}
 	}
 }
 
-CCSprite* PEStageBtn::makeStageNumber(int num, float *size, bool opacity)
+Sprite* PEStageBtn::makeStageNumber(int num, float *size, bool opacity)
 {
-    CCSprite *numberLabel = CCSprite::create();
+    Sprite *numberLabel = Sprite::create();
     int i, index;
-    CCSprite *spr;
+    Sprite *spr;
 	char file_path[40];
 	
 	*size = 0.0;
     
     /* cur gauge */
-    CCArray *num_array = CCArray::create();
+    __Array *num_array = __Array::create();
     if( num > 0 )
 	{
         while( num != 0 )
 		{
-            num_array->addObject( CCInteger::create( num%10 ) );
+            num_array->addObject( __Integer::create( num%10 ) );
             num /= 10;
 		}
 	}
     else
-        num_array->addObject( CCInteger::create( 0 ) );
+        num_array->addObject( __Integer::create( 0 ) );
 	
     
     for( i=num_array->count()-1; i>=0; i-- )
 	{
-        index = ( dynamic_cast<CCInteger*>( num_array->objectAtIndex(i) ) )->getValue();
+        index = ( dynamic_cast<__Integer*>( num_array->objectAtIndex(i) ) )->getValue();
 		sprintf(file_path, "Layer/lMainUi/IStageUi/%d.png", index);
 		
-		spr = CCSprite::create(file_path);
-		spr->setAnchorPoint( ccp( 0, 0 ) );
+		spr = Sprite::create(file_path);
+		spr->setAnchorPoint( Vec2( 0, 0 ) );
 		spr->setPositionX( *size );
 		
 		if(!opacity)
@@ -698,7 +698,7 @@ int PEStageBtn::load_stage_stars(void)
 {
 	char buf[15];
 	sprintf(buf, "stage%d", this->stage);
-	return CCUserDefault::sharedUserDefault()->getIntegerForKey(buf);
+	return UserDefault::sharedUserDefault()->getIntegerForKey(buf);
 }
 
 int PEStageBtn::get_stage_stars(void)
@@ -711,8 +711,8 @@ void PEStageBtn::set_stage_stars(int star)
 	char buf[15];
 	this->stars = star;
 	sprintf(buf, "stage%d", this->stage);
-	CCUserDefault::sharedUserDefault()->setIntegerForKey(buf, star);
-	CCUserDefault::sharedUserDefault()->flush();
+	UserDefault::sharedUserDefault()->setIntegerForKey(buf, star);
+	UserDefault::sharedUserDefault()->flush();
 }
 
 void PEStageBtn::toggle_btn(bool flag)
@@ -741,9 +741,9 @@ bool PEStageBtn::get_valid(void)
 	return is_valid;
 }
 
-CCRect PEStageBtn::get_boundingbox(void)
+Rect PEStageBtn::get_boundingbox(void)
 {
-	CCRect rect = touched_btn_back->boundingBox();
+	Rect rect = touched_btn_back->getBoundingBox();
 	Size size = touched_btn_back->getContentSize();
 	rect.setRect(getPositionX() - size.width/2, getPositionY() - size.height/2, size.width, size.height);
 	return rect;

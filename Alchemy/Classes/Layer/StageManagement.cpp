@@ -216,11 +216,11 @@ void StageManagement::resetTimeTable(){
 	while(i--)
 		m_timeTable[i] = tempTimeTable;
 	
-	CCTime::gettimeofdayCocos2d(&time_play[TIME_START], NULL);
-	CCTime::gettimeofdayCocos2d(&time_play[TIME_END], NULL);
+	gettimeofday(&time_play[TIME_START], NULL);
+	gettimeofday(&time_play[TIME_END], NULL);
 	
-	CCTime::gettimeofdayCocos2d(&time_spawn[TIME_START], NULL);
-	CCTime::gettimeofdayCocos2d(&time_spawn[TIME_END], NULL);
+	gettimeofday(&time_spawn[TIME_START], NULL);
+	gettimeofday(&time_spawn[TIME_END], NULL);
 	
 }
 
@@ -236,13 +236,13 @@ void StageManagement::setTimeTable(int stage) {
 
 }
 
-void StageManagement::setSpawnMonster(CCObject* target, SEL_SPAWN callback)
+void StageManagement::setSpawnMonster(Ref* target, SEL_SPAWN callback)
 {
 	pListener = target;
 	spawn_monster = callback;
 }
 
-void StageManagement::setPassCallback(CCObject* target, SEL_PASS callback)
+void StageManagement::setPassCallback(Ref* target, SEL_PASS callback)
 {
 	pListener_pass_callback = target;
 	pass_callback = callback;
@@ -253,10 +253,8 @@ void StageManagement::update(float delta)
 	double play_time;
 	double spawn_time;
     static int monster_count[4] ={0,};
-    CCTime::gettimeofdayCocos2d(&time_play[TIME_END], NULL);
-	play_time = CCTime::timersubCocos2d(
-									   &time_play[TIME_START],
-									   &time_play[TIME_END] );
+    gettimeofday(&time_play[TIME_END], NULL);
+	play_time = time_interval(time_play[TIME_START], time_play[TIME_END]);
 	
 	
 	
@@ -277,13 +275,11 @@ void StageManagement::update(float delta)
 		send_success_flag = true;
 	}
 	
-	CCTime::gettimeofdayCocos2d(&time_spawn[TIME_END], NULL);
-	spawn_time = CCTime::timersubCocos2d(
-										&time_spawn[TIME_START],
-										&time_spawn[TIME_END] );
+	gettimeofday(&time_spawn[TIME_END], NULL);
+	spawn_time = time_interval(time_spawn[TIME_START], time_spawn[TIME_END]);
 	if(spawn_time > pSawnTime[stage_progress_index] && stage_progress_index < 10)
 	{
-		CCTime::gettimeofdayCocos2d(&time_spawn[TIME_START], NULL);
+		gettimeofday(&time_spawn[TIME_START], NULL);
         
 		for(int i=0; i<pMonNum[stage_progress_index]; i++)
 		{
@@ -337,7 +333,7 @@ void StageManagement::update(float delta)
             
 		}
         stage_count++;
-        CCLog("stage_count : %d\n", stage_count);
+        log("stage_count : %d\n", stage_count);
 	}
 	
 }

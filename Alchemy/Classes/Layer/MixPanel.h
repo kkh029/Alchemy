@@ -46,9 +46,9 @@ public:
 	virtual void onExit();
 	//void registerWithTouchDispatcher(void);
 	
-	void TouchesBegan(__Set *pTouches, Event* pEvent);
-	void TouchesMoved(__Set *pTouches, Event* pEvent);
-	void TouchesEnded(__Set *pTouches, Event* pEvent);
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
 	virtual void onDoubleTap(Vec2 pos);
 	void setField(Field* field);
 	void setPEIcon(PEIcon* peicon);

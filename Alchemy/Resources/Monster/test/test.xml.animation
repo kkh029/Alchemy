@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<AnimationProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <filePath>C:\팀 먹고놀자\연금술사의 방\몬스터\animation\test\test.xml.animation</filePath>
+  <Version>1.2.0.1</Version>
+  <Name>test</Name>
+  <ProjectDir>C:\팀 먹고놀자\연금술사의 방\몬스터\animation\test</ProjectDir>
+  <JsonFileName>test.json</JsonFileName>
+  <Resources>C:\팀 먹고놀자\연금술사의 방\몬스터\animation\test\Resources</Resources>
+  <JsonFolder>C:\팀 먹고놀자\연금술사의 방\몬스터\animation\test\Json</JsonFolder>
+  <JsonList />
+  <ResourceFileList />
+  <CanvasSize>
+    <Width>0</Width>
+    <Height>0</Height>
+  </CanvasSize>
+  <bBatchImage>false</bBatchImage>
+</AnimationProject>

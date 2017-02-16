@@ -7,9 +7,9 @@
 #include "cocostudio/CocoStudio.h"
 
 #if defined(WIN32) 
-	#define PRINT_LOG(...) CCLog(__VA_ARGS__)
+	#define PRINT_LOG(...) log(__VA_ARGS__)
 #elif defined(CC_TARGET_OS_MAC)
-	#define PRINT_LOG(...) CCLog(__VA_ARGS__)
+	#define PRINT_LOG(...) log(__VA_ARGS__)
 #else
 	#define PRINT_LOG(...)
 #endif

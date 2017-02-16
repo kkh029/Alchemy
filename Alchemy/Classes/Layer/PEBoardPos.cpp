@@ -91,7 +91,7 @@ Vec2* PEBoardPos::getBoxVertex(CCTouch* pTouch)
   return oneBoxVertex;
 }
 
-void PEBoardPos::convertPointtBoxRect(Vec2* pos, CCRect* rect)
+void PEBoardPos::convertPointtBoxRect(Vec2* pos, Rect* rect)
 {
 	Vec2 index;
 	index.x = ((pos->x - BOARD_WIDTH_EDGE) / floorf(BOARD_WIDTH));
@@ -103,9 +103,9 @@ void PEBoardPos::convertPointtBoxRect(Vec2* pos, CCRect* rect)
 	rect->size.height = BOARD_HEIGHT;
 }
 
-CCRect PEBoardPos::getRectByIndex(Vec2 index)
+Rect PEBoardPos::getRectByIndex(Vec2 index)
 {
-	CCRect rect;
+	Rect rect;
 	rect.origin.x = board_pos_decision_row[(int)index.x];
 	rect.origin.y = board_pos_decision_col[(int)index.y];
 	rect.size.width = BOARD_WIDTH;

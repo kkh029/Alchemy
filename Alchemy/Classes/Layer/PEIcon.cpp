@@ -30,7 +30,7 @@ enum MixPanel_Zorder
 
 bool PEIcon::init(int stage)
 {
-    if ( !CCLayer::init() )
+    if ( !Layer::init() )
     {
         return false;
     }
@@ -45,22 +45,22 @@ bool PEIcon::init(int stage)
 		this,
 		menu_selector(PEIcon::pauseCall) );
     pauseBtn = CCMenu::create(pauseItem, NULL);
-	pauseBtn->setAnchorPoint(ccp(1.0f, 1.0f));
-    pauseBtn->setPosition(ccp(POSITION_ICON_PAUSE_X, POSITION_ICON_PAUSE_Y));
+	pauseBtn->setAnchorPoint(Vec2(1.0f, 1.0f));
+    pauseBtn->setPosition(Vec2(POSITION_ICON_PAUSE_X, POSITION_ICON_PAUSE_Y));
     addChild(pauseBtn);
 	
 	/* stage UI */
-	CCSprite* stage_frame = CCSprite::create("Layer/lUpUi/lFrame.png");
+	Sprite* stage_frame = Sprite::create("Layer/lUpUi/lFrame.png");
 	this->addChild(stage_frame, 1);
-	stage_frame->setAnchorPoint(ccp(0.0f, 1.0f));
-	stage_frame->setPosition(ccp(STAGE_POS_X, STAGE_POS_Y));
+	stage_frame->setAnchorPoint(Vec2(0.0f, 1.0f));
+	stage_frame->setPosition(Vec2(STAGE_POS_X, STAGE_POS_Y));
 
 	Size stage_frame_size = stage_frame->getContentSize();
 	sprintf(text_buf, "Stage %d-%d", m_stage, 1);
 	CCLabelTTF* stage_num =  CCLabelTTF::create(text_buf, "fonts/HYGothic-Extra.ttf", 40);
 	stage_num->setColor(ccc3(153, 179, 179));
-	stage_num->setAnchorPoint(ccp(0.5f, 0.5f));
-	stage_num->setPosition(ccp(STAGE_POS_X+stage_frame_size.width/2, STAGE_POS_Y-stage_frame_size.height/2));
+	stage_num->setAnchorPoint(Vec2(0.5f, 0.5f));
+	stage_num->setPosition(Vec2(STAGE_POS_X+stage_frame_size.width/2, STAGE_POS_Y-stage_frame_size.height/2));
 	this->addChild(stage_num, 1);
 
     touch_enable = true;
@@ -73,23 +73,23 @@ void PEIcon::onExit()
 }
 
 
-void PEIcon::pauseCall(CCObject* pSender)
+void PEIcon::pauseCall(Ref* pSender)
 {
     PESoundEffect::sharedPESoundEffect()->PE_play(PESoundEffect::SE_BUTTON_1);
     
 	// send notification - popup 
 	char buf[5];
 	sprintf(buf, "%d", POPUP_STOP);
-	CCString* popParam=CCString::create(buf);
-	CCNotificationCenter::sharedNotificationCenter()->postNotification("scene_popup", popParam); 
+	__String* popParam=__String::create(buf);
+	__NotificationCenter::getInstance()->postNotification("scene_popup", popParam); 
 }
 
-void PEIcon::menuCloseCallback(CCObject* pSender)
+void PEIcon::menuCloseCallback(Ref* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-    CCDirector::sharedDirector()->end();
+    Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif

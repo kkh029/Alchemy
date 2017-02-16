@@ -16,7 +16,7 @@
 #define POSITION_ICON_SOUND_X 875.0f
 #define POSITION_ICON_SOUND_Y 1845.0f
 
-class PEIcon : public CCLayer
+class PEIcon : public Layer
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -24,24 +24,24 @@ public:
 	virtual void onExit();
     
     // a selector callback
-    void menuCloseCallback(CCObject* pSender);
+    void menuCloseCallback(Ref* pSender);
 	void m_setTouchEnabled(bool enabled);
 	bool PE_con_PreCheck(int spend);
 	bool PE_mana_PreCheck(int spend);
 	bool PE_con_Check(int spend);
 	bool PE_mana_Check(int spend);
 
-	void PE_addCrystal(CCObject *obj);
-	void PE_subDoor(CCObject *obj);
+	void PE_addCrystal(Ref *obj);
+	void PE_subDoor(Ref *obj);
 	
 private:
-	void onSoundOnOff(CCObject* pSender);
+	void onSoundOnOff(Ref* pSender);
 	void init_soundBTN();
 	CCMenu* pauseBtn;
 	CCMenu* soundBtn;
 	bool isMute;
 	bool touch_enable;
-	void pauseCall(CCObject* pSender);
+	void pauseCall(Ref* pSender);
 	int m_stage;
 	
 	int door_energy;

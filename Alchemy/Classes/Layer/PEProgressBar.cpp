@@ -19,11 +19,11 @@ PEProgressBar* PEProgressBar::create(string bar_name, int max, bool direction, c
 	CCProgressTimer* pResultBar;
 	CCProgressTimer* pPreBar;
 	
-	CCSprite* result_bar_image = CCSprite::create(bar_name.c_str());
+	Sprite* result_bar_image = Sprite::create(bar_name.c_str());
 	pResultBar = CCProgressTimer::create(result_bar_image);
 	pResultBar->setType(kCCProgressTimerTypeBar);
-	pResultBar->setMidpoint(ccp(direction,0));
-	pResultBar->setBarChangeRate(ccp(1, 0));
+	pResultBar->setMidpoint(Vec2(direction,0));
+	pResultBar->setBarChangeRate(Vec2(1, 0));
 	pResultBar->setPercentage(100.0f);
 	pResultBar->setAnchorPoint(anchor);
 	pResultBar->setColor(ccc3(255,128,128));
@@ -31,11 +31,11 @@ PEProgressBar* PEProgressBar::create(string bar_name, int max, bool direction, c
 	pt->addChild(pResultBar);
 	pt->bar_width = result_bar_image->getContentSize().width;
 	
-	CCSprite* pre_bar_image = CCSprite::create(bar_name.c_str());
+	Sprite* pre_bar_image = Sprite::create(bar_name.c_str());
 	pPreBar = CCProgressTimer::create(pre_bar_image);
 	pPreBar->setType(kCCProgressTimerTypeBar);
-	pPreBar->setMidpoint(ccp(direction,0));
-	pPreBar->setBarChangeRate(ccp(1, 0));
+	pPreBar->setMidpoint(Vec2(direction,0));
+	pPreBar->setBarChangeRate(Vec2(1, 0));
 	pPreBar->setPercentage(100.0f);
 	pPreBar->setAnchorPoint(anchor);
 	pt->pre_bar = pPreBar;
@@ -87,9 +87,9 @@ void PEProgressBar::change_result_bar(int value)
             {
                 CCParticleSun* par = regen_particle[i];
                 if(direction)
-                    par->setPosition(ccp(get_bar_start_pos().x + get_bar_end_pos(), get_bar_start_pos().y));
+                    par->setPosition(Vec2(get_bar_start_pos().x + get_bar_end_pos(), get_bar_start_pos().y));
                 else
-                    par->setPosition(ccp(get_bar_start_pos().x - get_bar_end_pos(), get_bar_start_pos().y));
+                    par->setPosition(Vec2(get_bar_start_pos().x - get_bar_end_pos(), get_bar_start_pos().y));
             }
         }
 	}

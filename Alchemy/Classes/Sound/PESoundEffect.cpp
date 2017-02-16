@@ -37,7 +37,7 @@ PESoundEffect::~PESoundEffect()
 PESoundEffect* PESoundEffect::sharedPESoundEffect()
 {
     static PESoundEffect s_SharedPESoundEffect;
-    s_SharedPESoundEffect.onoff = CCUserDefault::sharedUserDefault()->getBoolForKey("EFFECT");
+    s_SharedPESoundEffect.onoff = UserDefault::sharedUserDefault()->getBoolForKey("EFFECT");
     return &s_SharedPESoundEffect;
 }
 
@@ -81,7 +81,7 @@ void PESoundEffect::PE_set_onoff(bool flag)
     onoff = flag;
     if(!onoff)
         SimpleAudioEngine::sharedEngine()->stopEffect(true);
-    CCUserDefault::sharedUserDefault()->setBoolForKey("EFFECT", onoff);
+    UserDefault::sharedUserDefault()->setBoolForKey("EFFECT", onoff);
 }
 
 bool PESoundEffect::PE_get_onoff(void)

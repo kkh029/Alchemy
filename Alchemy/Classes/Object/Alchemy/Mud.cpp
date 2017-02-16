@@ -44,14 +44,14 @@ Alchemy* Mud::create(PEObject* obj)
 
 void Mud::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
 
-	CCTime::gettimeofdayCocos2d(&event_time[TIME_START], NULL);
-	ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX_INDEX);
+	gettimeofday(&event_time[TIME_START], NULL);
+	ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 }
 
 
@@ -59,7 +59,7 @@ bool Mud::PE_update(unsigned int flag) {
 	double diffTime;
 	Vec2 index = getPosIndex();
 	Vec2 tower_pos = getPosition();
-	CCRect tower_box = boundingBox();
+	Rect tower_box = getBoundingBox();
 	int idx_x = index.x;
 	int idx_y = index.y;
 	
@@ -74,7 +74,7 @@ bool Mud::PE_update(unsigned int flag) {
 			{
 				Monster* obj;
 				obj = m_pCollision->m_monsters_matrix[idx_x][i];
-				if(tower_box.intersectsRect(obj->boundingBox())
+				if(tower_box.intersectsRect(obj->getBoundingBox())
 				   && obj->getType() == MONSTER_TYPE_WALKER)
 				{
 					obj->slow(0.5, 3);
@@ -83,10 +83,8 @@ bool Mud::PE_update(unsigned int flag) {
 		}
 	}
 
-	CCTime::gettimeofdayCocos2d(&event_time[TIME_END], NULL);
-	diffTime = CCTime::timersubCocos2d(
-									   &event_time[TIME_START],
-									   &event_time[TIME_END] );
+	gettimeofday(&event_time[TIME_END], NULL);
+	diffTime = time_interval(event_time[TIME_START], event_time[TIME_END]);
 	
 	if(diffTime > STAY_TIME)
 	{

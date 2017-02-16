@@ -614,8 +614,6 @@
 		371020BF1E3BA88300E245B0 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3710203B1E3BA88200E245B0 /* AppDelegate.cpp */; };
 		371020C01E3BA88300E245B0 /* Common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3710203D1E3BA88200E245B0 /* Common.cpp */; };
 		371020C11E3BA88300E245B0 /* Common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3710203D1E3BA88200E245B0 /* Common.cpp */; };
-		371020C21E3BA88300E245B0 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3710203F1E3BA88200E245B0 /* HelloWorldScene.cpp */; };
-		371020C31E3BA88300E245B0 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3710203F1E3BA88200E245B0 /* HelloWorldScene.cpp */; };
 		371020C41E3BA88300E245B0 /* PEIntroLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371020421E3BA88200E245B0 /* PEIntroLayer.cpp */; };
 		371020C51E3BA88300E245B0 /* PEIntroLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371020421E3BA88200E245B0 /* PEIntroLayer.cpp */; };
 		371020C61E3BA88300E245B0 /* Field.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371020451E3BA88200E245B0 /* Field.cpp */; };
@@ -1104,8 +1102,6 @@
 		3710203C1E3BA88200E245B0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3710203D1E3BA88200E245B0 /* Common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Common.cpp; sourceTree = "<group>"; };
 		3710203E1E3BA88200E245B0 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		3710203F1E3BA88200E245B0 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		371020401E3BA88200E245B0 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		371020421E3BA88200E245B0 /* PEIntroLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PEIntroLayer.cpp; sourceTree = "<group>"; };
 		371020431E3BA88200E245B0 /* PEIntroLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEIntroLayer.h; sourceTree = "<group>"; };
 		371020451E3BA88200E245B0 /* Field.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Field.cpp; sourceTree = "<group>"; };
@@ -2376,8 +2372,6 @@
 				3710203C1E3BA88200E245B0 /* AppDelegate.h */,
 				3710203D1E3BA88200E245B0 /* Common.cpp */,
 				3710203E1E3BA88200E245B0 /* Common.h */,
-				3710203F1E3BA88200E245B0 /* HelloWorldScene.cpp */,
-				371020401E3BA88200E245B0 /* HelloWorldScene.h */,
 				371020411E3BA88200E245B0 /* Intro */,
 				371020441E3BA88200E245B0 /* Layer */,
 				371020551E3BA88200E245B0 /* Main */,
@@ -3176,7 +3170,6 @@
 				3710210E1E3BA88300E245B0 /* BeeRat.cpp in Sources */,
 				3710212C1E3BA88300E245B0 /* PETime.cpp in Sources */,
 				3710211E1E3BA88300E245B0 /* PEPopupFail.cpp in Sources */,
-				371020C21E3BA88300E245B0 /* HelloWorldScene.cpp in Sources */,
 				371020E81E3BA88300E245B0 /* Icicle.cpp in Sources */,
 				371020C41E3BA88300E245B0 /* PEIntroLayer.cpp in Sources */,
 				371020FC1E3BA88300E245B0 /* Tornado.cpp in Sources */,
@@ -3271,7 +3264,6 @@
 				371020DD1E3BA88300E245B0 /* FireTalisman.cpp in Sources */,
 				371020D91E3BA88300E245B0 /* Block.cpp in Sources */,
 				3710211D1E3BA88300E245B0 /* PEObject.cpp in Sources */,
-				371020C31E3BA88300E245B0 /* HelloWorldScene.cpp in Sources */,
 				371021291E3BA88300E245B0 /* PEBackgroundMusic.cpp in Sources */,
 				3710211F1E3BA88300E245B0 /* PEPopupFail.cpp in Sources */,
 				371021071E3BA88300E245B0 /* Item.cpp in Sources */,

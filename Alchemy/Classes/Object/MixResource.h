@@ -4,7 +4,7 @@
 #include "Common.h"
 #include "PEObject.h"
 
-class MixResource : public CCSprite, public PEObject
+class MixResource : public Sprite, public PEObject
 {
 public:
 	MixResource(PE_s_resource obj);

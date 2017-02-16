@@ -35,18 +35,18 @@ Alchemy* Thunder::create(PEObject* obj)
 
 void Thunder::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
 	m_ani_stage = FADE_IN_INDEX;
-	ani->playWithIndex(FADE_IN_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX_INDEX);
+	ani->playWithIndex(FADE_IN_INDEX, -1, -1);
 }
 
 
 bool Thunder::PE_update(unsigned int flag) {
-	CCArmatureAnimation* ani = getAnimation();
+	ArmatureAnimation* ani = getAnimation();
 	int ani_index = ani->getCurrentFrameIndex();
 
 
@@ -55,7 +55,7 @@ bool Thunder::PE_update(unsigned int flag) {
 		case FADE_IN_INDEX:
 			if(ani_index == 30)
 			{
-				ani->playWithIndex(ATTACT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX_INDEX);
+				ani->playWithIndex(ATTACT_INDEX, -1, -1);
 				m_ani_stage = ATTACT_INDEX;
 			}
 			break;
@@ -64,7 +64,7 @@ bool Thunder::PE_update(unsigned int flag) {
 			if(ani_index / 20 > 0 && ani_index % 20 == 0)
 			{
 				Vec2 index = getPosIndex();
-				CCRect tower_box = boundingBox();
+				Rect tower_box = getBoundingBox();
 				int idx_x = index.x;
 				int idx_y = index.y;
 				int monster_count = 0;
@@ -80,7 +80,7 @@ bool Thunder::PE_update(unsigned int flag) {
 						{
 							Monster* obj;
 							obj = m_pCollision->m_monsters_matrix[idx_x][i];
-							if(tower_box.intersectsRect(obj->boundingBox()))
+							if(tower_box.intersectsRect(obj->getBoundingBox()))
 							{
 								obj->Hit(m_ap);
 							}
@@ -90,7 +90,7 @@ bool Thunder::PE_update(unsigned int flag) {
 			}
 			if(ani_index == 80)
 			{
-				ani->playWithIndex(FADE_OUT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX_INDEX);
+				ani->playWithIndex(FADE_OUT_INDEX, -1, -1);
 				m_ani_stage = FADE_OUT_INDEX;
 			}
 			break;

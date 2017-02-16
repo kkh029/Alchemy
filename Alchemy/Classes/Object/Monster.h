@@ -30,6 +30,7 @@ public:
     };
 
     static const int MONSTER_MAX = 4;
+    static PE_s_monster monster_table[MONSTER_MAX];
     
     static Monster* create(int index);
 

@@ -43,15 +43,15 @@ public:
 
 	static Scene* scene();
 
-	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesMoved(CCSet *pTouch, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouch, CCEvent *pEvent);
+	virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *event);
+	virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
 	
 protected:
 	
 private:
-	//void introOut(CCObject* in);
-	//CCSprite* m_title;
+	//void introOut(Ref* in);
+	//Sprite* m_title;
 	void startMain(float in);
 	void back(Ref* pSender);
 	void resume(void);
@@ -71,7 +71,7 @@ private:
 	void init_Main_stage_side_btn();
 
 	void title_out();
-	void title_in(CCObject* obj);
+	void title_in(Ref* obj);
 	void changeMainCard();
 
 	bool PE_check_bottom_btn(Vec2 pos);
@@ -84,7 +84,7 @@ private:
 	int select_stage_btn;
 
 	void (PEMain::*onButtonSelect[4])();
-	void onEndOfSelecctorMoving(CCObject* obj);
+	void onEndOfSelecctorMoving(Ref* obj);
 	void back_key_clicked_reset(float in);
 
 	Sprite* bottom_select_stroke;

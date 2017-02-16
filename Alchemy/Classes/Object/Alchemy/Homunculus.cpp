@@ -49,24 +49,24 @@ Alchemy* Homunculus::create(PEObject* obj)
 
 void Homunculus::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
 	ani_curr_index = DEFAULT_INDEX;
-	ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+	ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 }
 
 
 bool Homunculus::PE_update(unsigned int flag) {
-	CCArmatureAnimation* ani = getAnimation();
+	ArmatureAnimation* ani = getAnimation();
 	Vec2 index = getPosIndex();
 	Vec2 tower_pos = getPosition();
 	int idx_x = index.x;
 	int idx_y = index.y;
 	int monster_total = 0;
-	CCRect tower_box =  boundingBox();
+	Rect tower_box =  getBoundingBox();
 	tower_box.setRect(tower_box.getMinX(), tower_box.getMidY(), tower_box.getMaxX(), tower_box.getMaxY()+60.0f);
 	
 	if( ((flag) & 0x1) != ap_up)
@@ -81,7 +81,7 @@ bool Homunculus::PE_update(unsigned int flag) {
 			ap_up = false;
 			m_ap = AP;
 		}
-		CCLog("[AP] %d", m_ap);
+		log("[AP] %d", m_ap);
 	}
 	if( ((flag>>1) & 0x1) != cure)
 	{
@@ -94,7 +94,7 @@ bool Homunculus::PE_update(unsigned int flag) {
 		{
 			cure = false;
 		}
-		CCLog("[Cure] %s", (cure)?"ON":"OFF");
+		log("[Cure] %s", (cure)?"ON":"OFF");
 	}
 	if( (flag>>2 & 0x1) != speed_up)
 	{
@@ -108,7 +108,7 @@ bool Homunculus::PE_update(unsigned int flag) {
 			speed_up = false;
 			ani->setSpeedScale(1.0f);
 		}
-		CCLog("[Speed] %f", ani->getSpeedScale());
+		log("[Speed] %f", ani->getSpeedScale());
 	}
 	if( (flag>>3 & 0x1) != hp_up)
 	{
@@ -124,7 +124,7 @@ bool Homunculus::PE_update(unsigned int flag) {
 			m_max_hp -= HP/5;
 			m_hp = (m_hp>m_max_hp)?m_max_hp:m_hp;
 		}
-		CCLog("[Max HP] %d", m_max_hp);
+		log("[Max HP] %d", m_max_hp);
 	}
 	
 	for(int y=idx_y; y<idx_y+2; y++)
@@ -140,14 +140,14 @@ bool Homunculus::PE_update(unsigned int flag) {
 				Monster* obj;
 				obj = m_pCollision->m_monsters_matrix[idx_x][i];
 				
-			//	if(tower_box.intersectsRect(obj->boundingBox())
+			//	if(tower_box.intersectsRect(obj->getBoundingBox())
 			//	   && ani_curr_index == DEFAULT_INDEX)
 				if(ani_curr_index == DEFAULT_INDEX)
 				{
 					ani_curr_index = ATTACT_INDEX;
-					ani->playWithIndex(ATTACT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+					ani->playWithIndex(ATTACT_INDEX, -1, -1);
 				}
-				//else if(!tower_box.intersectsRect(obj->boundingBox())
+				//else if(!tower_box.intersectsRect(obj->getBoundingBox())
 				//		&& ani_curr_index == ATTACT_INDEX)
 				//{
 				//	ani_curr_index = DEFAULT_INDEX;
@@ -178,7 +178,7 @@ bool Homunculus::PE_update(unsigned int flag) {
 		if(ani_curr_index == ATTACT_INDEX)
 		{
 			ani_curr_index = DEFAULT_INDEX;
-			ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+			ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 		}
 	}
 

@@ -46,12 +46,12 @@ Alchemy* EarthTalisman::create(PEObject* obj)
 
 void EarthTalisman::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	setScale(1.3f);
 	ani = getAnimation();
-	ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX_INDEX);
+	ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 }
 
 

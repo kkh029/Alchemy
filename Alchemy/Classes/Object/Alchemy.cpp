@@ -25,7 +25,7 @@
 #include "Alchemy/Homunculus.h"
 
 
-CCSpriteBatchNode* Alchemy::m_pBatchNode_bullets;
+SpriteBatchNode* Alchemy::m_pBatchNode_bullets;
 
 PE_s_resource Alchemy::resource_table[RESOURCE_MAX] =
 {
@@ -117,7 +117,7 @@ Alchemy* Alchemy::create(PEObject* obj) {
 	unsigned char index = obj->PE_getResourceIndex();
 	if(index < RESOURCE_START || index >= RESOURCE_MAX)
 	{
-		CCLog("Alchemy create ----------- ERROR! : invalid index access(%d)\n", index);
+		log("Alchemy create ----------- ERROR! : invalid index access(%d)\n", index);
 		return NULL;
 	}
 	if(create_alchemy[index] != NULL)
@@ -152,12 +152,12 @@ void Alchemy::SetLocation(Vec2* location) {
 
 void Alchemy::PE_initAnimation(void)
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
-	ani->playWithIndex(0, -1, -1, -1, TWEEN_EASING_MAX);
+	ani->playWithIndex(0, -1, -1);
 }
 
 bool Alchemy::PE_update(unsigned int flag)
@@ -185,31 +185,29 @@ void Alchemy::PE_cure(bool start)
 
 	if(start)
 	{
-		CCTime::gettimeofdayCocos2d(&event_time[TIME_START], NULL);
+		gettimeofday(&event_time[TIME_START], NULL);
 		return;
 	}
 	
-	CCTime::gettimeofdayCocos2d(&event_time[TIME_END], NULL);
-	diffTime = CCTime::timersubCocos2d(
-											  &event_time[TIME_START],
-											  &event_time[TIME_END] );
+	gettimeofday(&event_time[TIME_END], NULL);
+	diffTime = time_interval(event_time[TIME_START], event_time[TIME_END]);
 	
 	if(diffTime > WaterTalisman::CURE)
 	{
 		m_hp += 1;
 		if(m_hp > m_max_hp)
 			m_hp = m_max_hp;
-		CCTime::gettimeofdayCocos2d(&event_time[TIME_START], NULL);
+		gettimeofday(&event_time[TIME_START], NULL);
 	}
 	return;
 }
 
 void Alchemy::PE_makeResource() {
-	Alchemy::m_pBatchNode_bullets = CCSpriteBatchNode::create("Alchemy/Bullet.png");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Alchemy/Bullet.plist");
+	Alchemy::m_pBatchNode_bullets = SpriteBatchNode::create("Alchemy/Bullet.png");
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Alchemy/Bullet.plist");
 }
 
-CCSpriteBatchNode* Alchemy::PE_getBatchNode_bullets() {
+SpriteBatchNode* Alchemy::PE_getBatchNode_bullets() {
 	if(Alchemy::m_pBatchNode_bullets == NULL)
 		Alchemy::PE_makeResource();
 	return Alchemy::m_pBatchNode_bullets;

@@ -32,7 +32,8 @@
 .DS_Store
 
 #Ressources
-Resources
+Resources\
 
-
+#compiled folder
+build\
 

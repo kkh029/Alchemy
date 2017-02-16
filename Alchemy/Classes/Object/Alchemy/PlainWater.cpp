@@ -38,7 +38,7 @@ PlainWater::PlainWater(unsigned char index)
 	cure = false;
 
 	/* bullet move size */
-	m_winSize = CCDirector::sharedDirector()->getWinSize();
+	m_winSize = Director::getInstance()->getWinSize();
 }
 
 PlainWater::~PlainWater()
@@ -53,18 +53,18 @@ Alchemy* PlainWater::create(PEObject* obj)
 
 void PlainWater::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
 
-	ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+	ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 }
 
 
 bool PlainWater::PE_update(unsigned int flag) {
-	CCArmatureAnimation* ani = getAnimation();
+	ArmatureAnimation* ani = getAnimation();
 	Vec2 index = getPosIndex();
 	int index_x = (int)index.x;
 	bool monster_appear = false;
@@ -81,7 +81,7 @@ bool PlainWater::PE_update(unsigned int flag) {
 			ap_up = false;
 			m_ap = AP;
 		}
-		CCLog("[AP] %d", m_ap);
+		log("[AP] %d", m_ap);
 	}
 	if( ((flag>>1) & 0x1) != cure)
 	{
@@ -95,7 +95,7 @@ bool PlainWater::PE_update(unsigned int flag) {
 			cure = false;
 			m_ap = AP;
 		}
-		CCLog("[Cure] %s", (cure)?"ON":"OFF");
+		log("[Cure] %s", (cure)?"ON":"OFF");
 	}
 	if( (flag>>2 & 0x1) != speed_up)
 	{
@@ -109,7 +109,7 @@ bool PlainWater::PE_update(unsigned int flag) {
 			speed_up = false;
 			ani->setSpeedScale(1.0f);
 		}
-		CCLog("[Speed] %f", ani->getSpeedScale());
+		log("[Speed] %f", ani->getSpeedScale());
 	}
 	if( (flag>>3 & 0x1) != hp_up)
 	{
@@ -125,7 +125,7 @@ bool PlainWater::PE_update(unsigned int flag) {
 			m_max_hp -= HP/5;
 			m_hp = (m_hp>m_max_hp)?m_max_hp:m_hp;
 		}
-		CCLog("[Max HP] %d", m_max_hp);
+		log("[Max HP] %d", m_max_hp);
 	}
 	
     int size = m_pCollision->m_monsters_matrix[index_x].size();
@@ -136,9 +136,9 @@ bool PlainWater::PE_update(unsigned int flag) {
 	{
 		isAttack = monster_appear;
 		if(isAttack)
-			ani->playWithIndex(ATTACT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+			ani->playWithIndex(ATTACT_INDEX, -1, -1);
 		else
-			ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+			ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 	}
 
 	/* 27 - animation fire index */
@@ -146,7 +146,7 @@ bool PlainWater::PE_update(unsigned int flag) {
 	{
 		if(m_bullets.size()>0)
 		{
-            CCSprite* pBullet = m_bullets[0];
+            Sprite* pBullet = m_bullets[0];
         
             Monster* obj;
             for(int j=0; j<size; j++)
@@ -154,10 +154,10 @@ bool PlainWater::PE_update(unsigned int flag) {
                 obj = m_pCollision->m_monsters_matrix[index_x][j];
                 //Vec2 obj_index = PEBoardPos::getInstance()->getPosIndex(obj->getPosition());
                 
-                CCRect objBox = obj->boundingBox();
+                Rect objBox = obj->getBoundingBox();
                 Vec2 tower_pos = getPosition();
-                CCRect objTargetBox =  CCRect(objBox.getMinX()-tower_pos.x, objBox.getMinY()-tower_pos.y + 60.0f, objBox.getMaxX()-tower_pos.x, objBox.getMaxY()-tower_pos.y);
-                if(pBullet->boundingBox().intersectsRect(objTargetBox))
+                Rect objTargetBox =  Rect(objBox.getMinX()-tower_pos.x, objBox.getMinY()-tower_pos.y + 60.0f, objBox.getMaxX()-tower_pos.x, objBox.getMaxY()-tower_pos.y);
+                if(pBullet->getBoundingBox().intersectsRect(objTargetBox))
                 {
                     pBullet->setVisible(false);
                     pBullet->stopAllActions();
@@ -183,18 +183,18 @@ bool PlainWater::PE_update(unsigned int flag) {
 	return m_alive;
 }
 
-CCSprite* PlainWater::FireBullet()
+Sprite* PlainWater::FireBullet()
 {
-	CCSprite* pBullet = CCSprite::create("Alchemy/waterbullet.png");
+	Sprite* pBullet = Sprite::create("Alchemy/waterbullet.png");
 	addChild(pBullet);
 	Size tower_size = getContentSize();
 	Vec2 tower_pos = getPosition();
 	float duration = BULLET_SPEED;
 	
-	pBullet->setPosition(ccp(0,103));
+	pBullet->setPosition(Vec2(0,103));
 	
 	CCCallFuncN* pCallFuncN = CCCallFuncN::create(this, callfuncN_selector(PlainWater::OnEndOfBullet));
-	CCMoveBy* pMoveBy = CCMoveBy::create(duration, ccp(0.0f, m_winSize.height));
+	CCMoveBy* pMoveBy = CCMoveBy::create(duration, Vec2(0.0f, m_winSize.height));
 	pBullet->runAction(CCSequence::create(pMoveBy, pCallFuncN, NULL));
 	
 	return pBullet;

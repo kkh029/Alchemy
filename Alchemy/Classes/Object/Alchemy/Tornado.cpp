@@ -36,7 +36,7 @@ Tornado::Tornado(unsigned char index)
 	cure = false;
 	
 	/* bullet move size */
-	m_winSize = CCDirector::sharedDirector()->getWinSize();
+	m_winSize = Director::getInstance()->getWinSize();
 }
 
 Tornado::~Tornado()
@@ -51,24 +51,24 @@ Alchemy* Tornado::create(PEObject* obj)
 
 void Tornado::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
 
-	ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, 1000);
+	ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 }
 
 
 bool Tornado::PE_update(unsigned int flag) {
-	CCArmatureAnimation* ani = getAnimation();
+	ArmatureAnimation* ani = getAnimation();
 	Vec2 index = getPosIndex();
 	Monster* obj;
 	int index_x = (int)index.x;
 	int attack = 0;
 	
-	CCLog("ani index :%d", ani->getCurrentFrameIndex());
+	log("ani index :%d", ani->getCurrentFrameIndex());
 	
 	if( ((flag) & 0x1) != ap_up)
 	{
@@ -82,7 +82,7 @@ bool Tornado::PE_update(unsigned int flag) {
 			ap_up = false;
 			m_ap = AP;
 		}
-		CCLog("[AP] %d", m_ap);
+		log("[AP] %d", m_ap);
 	}
 	if( ((flag>>1) & 0x1) != cure)
 	{
@@ -95,7 +95,7 @@ bool Tornado::PE_update(unsigned int flag) {
 		{
 			cure = false;
 		}
-		CCLog("[Cure] %s", (cure)?"ON":"OFF");
+		log("[Cure] %s", (cure)?"ON":"OFF");
 	}
 	if( (flag>>2 & 0x1) != speed_up)
 	{
@@ -109,7 +109,7 @@ bool Tornado::PE_update(unsigned int flag) {
 			speed_up = false;
 			ani->setSpeedScale(1.0f);
 		}
-		CCLog("[Speed] %f", ani->getSpeedScale());
+		log("[Speed] %f", ani->getSpeedScale());
 	}
 	if( (flag>>3 & 0x1) != hp_up)
 	{
@@ -125,7 +125,7 @@ bool Tornado::PE_update(unsigned int flag) {
 			m_max_hp -= HP/5;
 			m_hp = (m_hp>m_max_hp)?m_max_hp:m_hp;
 		}
-		CCLog("[Max HP] %d", m_max_hp);
+		log("[Max HP] %d", m_max_hp);
 	}
 	
 	for(int index_y=index.y; index_y<ROW_NUM+1; index_y++)
@@ -143,9 +143,9 @@ bool Tornado::PE_update(unsigned int flag) {
 	{
 		isAttack = attack;
 		if(isAttack)
-			ani->playWithIndex(ATTACT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+			ani->playWithIndex(ATTACT_INDEX, -1, -1);
 		else
-			ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+			ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 	}
 	
 	/* 27 - animation fire index */
@@ -154,11 +154,11 @@ bool Tornado::PE_update(unsigned int flag) {
 		for(int i=0; i<m_bullets.size(); i++)
 		{
 			CCArmature* pBullet = m_bullets[i];
-			CCRect objBox = obj->boundingBox();
+			Rect objBox = obj->getBoundingBox();
 			Vec2 tower_pos = getPosition();
-			CCRect objTargetBox =  CCRect(objBox.getMinX()-tower_pos.x, objBox.getMinY()-tower_pos.y + 60.0f, objBox.getMaxX()-tower_pos.x, objBox.getMaxY()-tower_pos.y);
+			Rect objTargetBox =  Rect(objBox.getMinX()-tower_pos.x, objBox.getMinY()-tower_pos.y + 60.0f, objBox.getMaxX()-tower_pos.x, objBox.getMaxY()-tower_pos.y);
 			
-			if(pBullet->boundingBox().intersectsRect(objTargetBox))
+			if(pBullet->getBoundingBox().intersectsRect(objTargetBox))
 			{
 				obj->Hit(m_ap);
 				m_bullets.erase(m_bullets.begin()+i);
@@ -187,7 +187,7 @@ bool Tornado::PE_update(unsigned int flag) {
 CCArmature* Tornado::FireBullet()
 {
 	CCArmature* pBullet  = CCArmature::create("Tornado");
-	pBullet->getAnimation()->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+	pBullet->getAnimation()->playWithIndex(DEFAULT_INDEX, -1, -1);
 	pBullet->setScale(0.5);
 	addChild(pBullet);
 	Size tower_size = getContentSize();
@@ -195,10 +195,10 @@ CCArmature* Tornado::FireBullet()
 	float duration = BULLET_SPEED;
 	
 	/* 110 - bullet position in animation */
-	pBullet->setPosition(ccp(0,103));
+	pBullet->setPosition(Vec2(0,103));
 	
 	CCCallFuncN* pCallFuncN = CCCallFuncN::create(this, callfuncN_selector(Tornado::OnEndOfBullet));
-	CCMoveBy* pMoveBy = CCMoveBy::create(duration, ccp(0.0f, m_winSize.height - tower_pos.y -500));
+	CCMoveBy* pMoveBy = CCMoveBy::create(duration, Vec2(0.0f, m_winSize.height - tower_pos.y -500));
 	pBullet->runAction(CCSequence::create(pMoveBy, pCallFuncN, NULL));
 	
 	return pBullet;

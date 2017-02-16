@@ -28,7 +28,7 @@ public:
 private:
 	int isAttack;
 	Size m_winSize;
-	cc_timeval event_time[2];
+	_STRUCT_TIMEVAL event_time[2];
 };
 
 #endif /* defined(__Alchemy__WindTalisman__) */

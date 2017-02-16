@@ -3,21 +3,21 @@
 
 #include "Common.h"
 
-class PEPopupStop: public CCLayer
+class PEPopupStop: public Layer
 {
 private:
-	CCSprite* popUpBack;
+	Sprite* popUpBack;
 	Size backSize;
 
-	CCMenu* BGMOFFbtn;
-	CCMenu* EFFECTOFFbtn;
+	Menu* BGMOFFbtn;
+	Menu* EFFECTOFFbtn;
 
-	CCSprite* makeStageNumber(int num, float *size);
-	void resume(CCObject* pSender);
-	void restart(CCObject* pSender);
-	void exit(CCObject* pSender);
-	void BGMonoff(CCObject* pSender);
-	void EFFECTonoff(CCObject* pSender);
+	Sprite* makeStageNumber(int num, float *size);
+	void resume(Ref* pSender);
+	void restart(Ref* pSender);
+	void exit(Ref* pSender);
+	void BGMonoff(Ref* pSender);
+	void EFFECTonoff(Ref* pSender);
 
 public:
 	bool init();

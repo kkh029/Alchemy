@@ -16,7 +16,7 @@ PEPopupSuccess::~PEPopupSuccess()
 bool PEPopupSuccess::init()
 {
 	/*
-    if ( !CCLayerColor::initWithColor(ccc4(0, 0, 0, 0)) )
+    if ( !LayerColor::initWithColor(ccc4(0, 0, 0, 0)) )
     {
         return false;
     }

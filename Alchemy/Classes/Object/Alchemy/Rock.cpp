@@ -43,12 +43,12 @@ Alchemy* Rock::create(PEObject* obj)
 
 void Rock::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
-	ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+	ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 }
 
 
@@ -64,7 +64,7 @@ bool Rock::PE_update(unsigned int flag) {
 		{
 			cure = false;
 		}
-		CCLog("[Cure] %s", (cure)?"ON":"OFF");
+		log("[Cure] %s", (cure)?"ON":"OFF");
 	}
 	
 	if( (flag>>3 & 0x1) != hp_up)
@@ -81,7 +81,7 @@ bool Rock::PE_update(unsigned int flag) {
 			m_max_hp -= HP/5;
 			m_hp = (m_hp>m_max_hp)?m_max_hp:m_hp;
 		}
-		CCLog("[Max HP] %d", m_max_hp);
+		log("[Max HP] %d", m_max_hp);
 	}
 	
 	if(cure)

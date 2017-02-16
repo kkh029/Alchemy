@@ -12,7 +12,7 @@ PEObject::PEObject() {
 	m_ani_attack = -1;
 	m_ani_special = -1;
 	m_hitTime = 0;
-	m_winSize = CCDirector::sharedDirector()->getWinSize();
+	m_winSize = Director::getInstance()->getWinSize();
 }
 
 PEObject::PEObject(PE_s_resource resource)

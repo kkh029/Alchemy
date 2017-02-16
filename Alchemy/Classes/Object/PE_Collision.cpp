@@ -58,17 +58,17 @@ void PE_Collision::PE_updateMatrix()
                     int type = rand()%2;
                     int value = obj->getCircle();
                     
-                    CCInteger* data = CCInteger::create(value*4 + type);
+                    __Integer* data = __Integer::create(value*4 + type);
                     CCFloat* pos_x = CCFloat::create(obj->getPositionX());
                     CCFloat* pos_y = CCFloat::create(obj->getPositionY());
-                    CCArray* param = CCArray::create(data, pos_x, pos_y, NULL);
-                    CCNotificationCenter::sharedNotificationCenter()->postNotification("regen_con_mana", param);
+                    __Array* param = __Array::create(data, pos_x, pos_y, NULL);
+                    __NotificationCenter::getInstance()->postNotification("regen_con_mana", param);
                 }
 
                 m_monsters_matrix[i].erase(m_monsters_matrix[i].begin()+monster_total);
                 obj->setVisible(false);
                 obj->ball->setPosition(obj->getPosition());
-                obj->ball->getAnimation()->playWithIndex(3, -1, -1, 0, 0);
+                obj->ball->getAnimation()->playWithIndex(3, -1, -1);
                 CCDelayTime* pDelayTime = CCDelayTime::create(1.0f);
                 CCCallFuncO* pCallFuncO =  CCCallFuncO::create(this, callfuncO_selector(PE_Collision::removeMonster), obj);
                 obj->ball->runAction(CCSequence::create(pDelayTime, pCallFuncO, NULL));
@@ -77,7 +77,7 @@ void PE_Collision::PE_updateMatrix()
     }
 }
 
-void PE_Collision::removeMonster(CCObject* pObject)
+void PE_Collision::removeMonster(Ref* pObject)
 {
     Monster* obj = (Monster*)pObject;
     obj->ball->setVisible(false);
@@ -85,7 +85,7 @@ void PE_Collision::removeMonster(CCObject* pObject)
     obj->removeFromParent();
 }
 
-void PE_Collision::setHitDoorCallback(CCObject* target, SEL_HITDOOR callback)
+void PE_Collision::setHitDoorCallback(Ref* target, SEL_HITDOOR callback)
 {
 	pListener = target;
 	hitDoor = callback;

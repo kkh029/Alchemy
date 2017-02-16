@@ -30,12 +30,12 @@ private:
 
 	Size m_winSize;
 	Vec2 field_index;
-	std::vector<CCSprite*> m_bullets;
-	CCSprite* FireBullet();
-    CCSpriteBatchNode* batch_bullet;
-    CCSpriteBatchNode* batch_fire;
-	void OnEndOfBullet(CCObject* object);
-    void OnEndOfFire(CCObject* object);
+	std::vector<Sprite*> m_bullets;
+	Sprite* FireBullet();
+    SpriteBatchNode* batch_bullet;
+    SpriteBatchNode* batch_fire;
+	void OnEndOfBullet(Ref* object);
+    void OnEndOfFire(Ref* object);
 	int bullet_time_count;
 	int bullet_time_last;
     

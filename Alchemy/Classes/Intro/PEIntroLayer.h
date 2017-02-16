@@ -11,22 +11,22 @@
 
 #include "../Common.h"
 
-class PEIntroLayer : public CCLayerColor
+class PEIntroLayer : public LayerColor
 {
 public:
 	bool init();
 	
-	static CCScene* scene();
+	static Scene* scene();
 	CREATE_FUNC(PEIntroLayer);
 	
 protected:
 	
 private:
-	void introOut(CCObject* in);
-	CCSprite* m_title;
+	void introOut(Ref* in);
+	Sprite* m_title;
 	void startButton(float in);
 	void startIntro(float in);
-	CCLayerColor* buttonLayer;
+	LayerColor* buttonLayer;
 };
 
 #endif /* defined(__Alchemy__PEIntroLayer__) */

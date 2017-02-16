@@ -11,28 +11,26 @@
 
 #include "../Common.h"
 
-typedef void (CCObject::*SEL_Resume)(void);
+typedef void (Ref::*SEL_Resume)(void);
 
-class PEPopUpSetting: public CCLayer
+class PEPopUpSetting: public Layer
 {
 public:
 	bool init();
-	void setResume(CCObject* target, SEL_Resume pResume) ;
+	void setResume(Ref* target, SEL_Resume pResume) ;
 
 private:
-	CCSprite* popUpBack;
+	Sprite* popUpBack;
 	Size backSize;
 	
 	CCMenu* BGMOFFbtn;
 	CCMenu* EFFECTOFFbtn;
 	
-	void BGMonoff(CCObject* pSender);
-	void EFFECTonoff(CCObject* pSender);
-	void credit(CCObject* pSender);
+	void BGMonoff(Ref* pSender);
+	void EFFECTonoff(Ref* pSender);
+	void credit(Ref* pSender);
 	
-	void keyBackClicked(void);
-	
-	CCObject*	pListener;
+	Ref*	pListener;
     SEL_Resume    resume;
 };
 

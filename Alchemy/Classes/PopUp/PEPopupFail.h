@@ -3,16 +3,16 @@
 
 #include "Common.h"
 
-class PEPopupFail: public CCLayer
+class PEPopupFail: public Layer
 {
 private:
-	CCSprite* popUpBack;
+	Sprite* popUpBack;
 	Size backSize;
 	
-	CCSprite* makeStageNumber(int num, float *size);
-	void resume(CCObject* pSender);
-	void restart(CCObject* pSender);
-	void exit(CCObject* pSender);
+	Sprite* makeStageNumber(int num, float *size);
+	void resume(Ref* pSender);
+	void restart(Ref* pSender);
+	void exit(Ref* pSender);
 	
 public:
 	bool init();

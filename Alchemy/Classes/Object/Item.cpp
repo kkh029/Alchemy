@@ -1,7 +1,7 @@
 #include "Item.h"
 #include "../Layer/Field.h"
 
-CCSpriteBatchNode* Item::m_pBatchNode_Item;
+SpriteBatchNode* Item::m_pBatchNode_Item;
 
 PE_s_item Item::item_table[ITEM_MAX] = {
 	/*
@@ -16,7 +16,7 @@ Item::Item(unsigned char id, Vec2 position){
 	if(Item::m_pBatchNode_Item == NULL)
 		Item::PE_makeResource();
 	
-	setAnchorPoint(ccp(0.5f, 0.5f));
+	setAnchorPoint(Vec2(0.5f, 0.5f));
 	setPosition(position);
 	setVisible(true);
 	scheduleUpdate();
@@ -27,12 +27,12 @@ Item::Item(unsigned char id, Vec2 position){
 	m_wearable = item_table[id].wearable;
 	m_takeFlag = false;
 	m_startTime = PETime::GetTime();
-	m_velocity = ccp((rand() % 5 - 2), 10.0f);
-	m_velocity = ccpAdd(m_velocity, ccp(0.5f, 0.0f));
+	m_velocity = Vec2((rand() % 5 - 2), 10.0f);
+	m_velocity = ccpAdd(m_velocity, Vec2(0.5f, 0.0f));
 
 	m_destination =  position.y - (rand() % 41);
 
-	m_winSize = CCDirector::sharedDirector()->getWinSize();
+	m_winSize = Director::getInstance()->getWinSize();
 }
 
 Item::~Item() {
@@ -42,7 +42,7 @@ Item::~Item() {
 Item* Item::create(int id, Vec2 position) {
 	string name = item_table[id].name;
 	name.append(".png");
-	CCSpriteFrame* pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name.c_str());
+	SpriteFrame* pFrame = SpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name.c_str());
 
 	Item* pItem = new Item(id, position);
 	if(pItem && pItem->initWithSpriteFrame(pFrame)) {
@@ -59,7 +59,7 @@ void Item::update(float dt) {
 	if(getPositionY() < m_destination || m_takeFlag)
 		return;
 
-	Vec2 gravity = Vec2Make(0.0f, -15.0f * dt);
+	Vec2 gravity = Vec2(0.0f, -15.0f * dt);
 
 	m_velocity = ccpAdd(m_velocity, gravity);
 
@@ -82,16 +82,16 @@ void Item::take() {
 	setStartTime(PETime::GetTime());
 	
 	CCCallFuncO* pCallFuncO =  CCCallFuncO::create(this, callfuncO_selector(Item::OnTakeItem), this);
-	//CCMoveBy* pMoveBy = CCMoveBy::create(duration, ccp(-distanceX, -distanceY));
+	//CCMoveBy* pMoveBy = CCMoveBy::create(duration, Vec2(-distanceX, -distanceY));
 	ccBezierConfig bezierConfig;
-	bezierConfig.endPosition = ccp(50.0f, 500.f);
-	bezierConfig.controlPoint_2 = ccp(50.0f, 600.0f);
+	bezierConfig.endPosition = Vec2(50.0f, 500.f);
+	bezierConfig.controlPoint_2 = Vec2(50.0f, 600.0f);
 	switch(rand()%2) {
 	case 0:
-		bezierConfig.controlPoint_1 = ccp(100.0f, 1500.0f);
+		bezierConfig.controlPoint_1 = Vec2(100.0f, 1500.0f);
 		break;
 	case 1:
-		bezierConfig.controlPoint_1 = ccp(getPositionX(), 400.0f);
+		bezierConfig.controlPoint_1 = Vec2(getPositionX(), 400.0f);
 		break;
 	}
 	
@@ -100,7 +100,7 @@ void Item::take() {
 	this->runAction(CCSequence::create(pBezier, pCallFuncO, NULL));
 }
 
-void Item::OnTakeItem(CCObject* pObject) {
+void Item::OnTakeItem(Ref* pObject) {
 	Item* pItem = (Item*)pObject;
 	pItem->stopAllActions();
 	pItem->setVisible(false);
@@ -108,11 +108,11 @@ void Item::OnTakeItem(CCObject* pObject) {
 
 // Prepare Resource
 void Item::PE_makeResource() {
-	Item::m_pBatchNode_Item = CCSpriteBatchNode::create("Item/Item.png");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Item/Item.plist");
+	Item::m_pBatchNode_Item = SpriteBatchNode::create("Item/Item.png");
+	SpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Item/Item.plist");
 }
 
-CCSpriteBatchNode* Item::PE_ITEM_getBatchNode() {
+SpriteBatchNode* Item::PE_ITEM_getBatchNode() {
 	if(Item::m_pBatchNode_Item == NULL)
 		Item::PE_makeResource();
 	return Item::m_pBatchNode_Item;

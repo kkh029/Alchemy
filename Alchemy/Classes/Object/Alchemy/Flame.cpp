@@ -42,7 +42,7 @@ Flame::Flame(unsigned char index)
 	y_pos_offset = 20.0f;
 
 	/* bullet move size */
-	m_winSize = CCDirector::sharedDirector()->getWinSize();
+	m_winSize = Director::getInstance()->getWinSize();
 }
 
 Flame::~Flame()
@@ -56,23 +56,23 @@ Alchemy* Flame::create(PEObject* obj)
 
 void Flame::PE_initAnimation()
 {
-	CCArmatureAnimation* ani;
+	ArmatureAnimation* ani;
 	
 	init(m_name.c_str());
-	setAnchorPoint(ccp(0.5f, 0.0f));
+	setAnchorPoint(Vec2(0.5f, 0.0f));
 	ani = getAnimation();
 
-	ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+	ani->playWithIndex(DEFAULT_INDEX, -1, -1);
     
-    batch_bullet = CCSpriteBatchNode::create("Alchemy/Flame/FlameBullet.png", 5);
+    batch_bullet = SpriteBatchNode::create("Alchemy/Flame/FlameBullet.png", 5);
     addChild(batch_bullet);
     
-    batch_fire = CCSpriteBatchNode::create("fire.png", 5);
+    batch_fire = SpriteBatchNode::create("fire.png", 5);
     addChild(batch_fire);
 }
 
 bool Flame::PE_update(unsigned int flag) {
-	CCArmatureAnimation* ani = getAnimation();
+	ArmatureAnimation* ani = getAnimation();
 	int attack = 0;
 	
 	if( ((flag) & 0x1) != ap_up)
@@ -162,10 +162,10 @@ bool Flame::PE_update(unsigned int flag) {
 			FireBullet();
 			bullet_time_count = 0;
 			bullet_time_last = 0;
-			ani->playWithIndex(ATTACT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+			ani->playWithIndex(ATTACT_INDEX, -1, -1);
 		}
 		else
-			ani->playWithIndex(DEFAULT_INDEX, -1, -1, LOOP, TWEEN_EASING_MAX);
+			ani->playWithIndex(DEFAULT_INDEX, -1, -1);
 	}
 	
 	if(isAttack)
@@ -199,12 +199,12 @@ bool Flame::PE_update(unsigned int flag) {
 
 Vec2 bullet_move_table[6]=
 {
-	ccp(-150.0f, 250.0f),
-	ccp(0.0f, 250.0f),
-	ccp(150.0f, 250.0f),
-	ccp(-140.0f, 110.0f),
-	ccp(0.0f, 100.0f),
-	ccp(140.0f, 110.0f),
+	Vec2(-150.0f, 250.0f),
+	Vec2(0.0f, 250.0f),
+	Vec2(150.0f, 250.0f),
+	Vec2(-140.0f, 110.0f),
+	Vec2(0.0f, 100.0f),
+	Vec2(140.0f, 110.0f),
 };
 
 int bullet_index[6][2]=
@@ -228,15 +228,15 @@ float bullet_rotation[6] =
 	51.842773
 };
 
-CCSprite* Flame::FireBullet()
+Sprite* Flame::FireBullet()
 {
 
 	Size tower_size = getContentSize();
 	Vec2 tower_pos = getPosition();
-    CCRect rect;
-    rect.origin = ccp(0,0);
-    rect.size = ccp(33,116);
-	CCSprite* pBullet[6];
+    Rect rect;
+    rect.origin = Vec2(0,0);
+    rect.size = Vec2(33,116);
+	Sprite* pBullet[6];
 	
 	for(int i=0; i<6; i++)
 	{
@@ -245,13 +245,13 @@ CCSprite* Flame::FireBullet()
 		if(m_pos_index.x == COL_NUM-1 && (i==2||i==5))
 			continue;
 
-        pBullet[i] = CCSprite::createWithTexture(batch_bullet->getTexture());
+        pBullet[i] = Sprite::createWithTexture(batch_bullet->getTexture());
 		batch_bullet->addChild(pBullet[i]);
-		pBullet[i]->setPosition(ccp(0,50));
+		pBullet[i]->setPosition(Vec2(0,50));
 		pBullet[i]->setScale(1.5f);
 		pBullet[i]->setRotation( bullet_rotation[i]);
 
-		CCArray* array = CCArray::create(CCInteger::create(i), pBullet[i], NULL);
+		__Array* array = __Array::create(__Integer::create(i), pBullet[i], NULL);
 		CCCallFuncO* pCallFuncN = CCCallFuncO::create(this, callfuncO_selector(Flame::OnEndOfBullet), array);
 		CCActionInterval* wait = CCDelayTime::create(0.05);
 		CCMoveBy* pMoveBy = CCMoveBy::create(0.3f, bullet_move_table[i]);
@@ -261,13 +261,13 @@ CCSprite* Flame::FireBullet()
 	return NULL;
 }
 
-void Flame::OnEndOfBullet(CCObject* object) {
-	CCArray *pParam=(CCArray*)object;
-	CCInteger* pbullet_index = (CCInteger*)pParam->objectAtIndex(0);
+void Flame::OnEndOfBullet(Ref* object) {
+	__Array *pParam=(__Array*)object;
+	__Integer* pbullet_index = (__Integer*)pParam->objectAtIndex(0);
 	int bullut_index = pbullet_index->getValue();
-	CCSprite* bullet = (CCSprite*)pParam->objectAtIndex(1);
-	CCRect bullet_rect 
-		= PEBoardPos::getInstance()->getRectByIndex(ccp(getPosIndex().x + bullet_index[bullut_index][0],getPosIndex().y + bullet_index[bullut_index][1]));
+	Sprite* bullet = (Sprite*)pParam->objectAtIndex(1);
+	Rect bullet_rect 
+		= PEBoardPos::getInstance()->getRectByIndex(Vec2(getPosIndex().x + bullet_index[bullut_index][0],getPosIndex().y + bullet_index[bullut_index][1]));
 	
 
     CCParticleFire* m_emitter = CCParticleFire::create();
@@ -296,7 +296,7 @@ void Flame::OnEndOfBullet(CCObject* object) {
 		{
 			obj = m_pCollision->m_monsters_matrix[index_x][j];
 
-			CCRect objBox = obj->boundingBox();
+			Rect objBox = obj->getBoundingBox();
 			Vec2 tower_pos = getPosition();
 
 			if(bullet_rect.intersectsRect(objBox))
@@ -308,7 +308,7 @@ void Flame::OnEndOfBullet(CCObject* object) {
 	}
 }
 
-void Flame::OnEndOfFire(CCObject* object) {
+void Flame::OnEndOfFire(Ref* object) {
     CCParticleFire* par = (CCParticleFire*)object;
     par->stopSystem();
 }

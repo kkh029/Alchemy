@@ -5,6 +5,14 @@
 #include "Monster/Lamp.h"
 #include "../Layer/Field.h"
 
+PE_s_monster Monster::monster_table[MONSTER_MAX] = {
+    // index circle name type hp ap range move
+    {0, 0, "BeeRat", 0, 10, 10, 10, 10},
+    {1, 0, "PigTurtle", 0, 10, 10, 10, 10},
+    {2, 0, "ElePanda", 0, 10, 10, 10, 10},
+    {3, 0, "Lamp", 0, 10, 10, 10, 10},
+};
+
 Monster* Monster::create(int index)
 {
     switch(index)

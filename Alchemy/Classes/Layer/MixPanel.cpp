@@ -22,33 +22,33 @@ char icon_background_filename[4][50] =
 };
 Vec2 mov_dist_4element[4] =
 {
-	ccp(-34.0, 20.0f),
-	ccp(-20.0, 34.0f),
-	ccp(20.0, 34.0f),
-	ccp(34.0, 20.0f),
+	Vec2(-34.0, 20.0f),
+	Vec2(-20.0, 34.0f),
+	Vec2(20.0, 34.0f),
+	Vec2(34.0, 20.0f),
 };
 
-Vec2 mixBtn_pos = ccp(540.0f, 87.0f);
+Vec2 mixBtn_pos = Vec2(540.0f, 87.0f);
 
 /* 1 Circle Position */
 Vec2 element_icon_pos[4] =
 {
-	ccp(-248, 248),
-	ccp(-91, 339),
-	ccp(91, 339),
-	ccp(248, 248),
+	Vec2(-248, 248),
+	Vec2(-91, 339),
+	Vec2(91, 339),
+	Vec2(248, 248),
 };
 
 /* 2~3 Circle Position */
 Vec2 alchemy_icon_pos[7] =
 {
-	ccp(-350, 0),
-	ccp(-305, 175),
-	ccp(-175, 303),
-	ccp(0, 350),
-	ccp(175, 303),
-	ccp(305, 175),
-	ccp(350, 0),
+	Vec2(-350, 0),
+	Vec2(-305, 175),
+	Vec2(-175, 303),
+	Vec2(0, 350),
+	Vec2(175, 303),
+	Vec2(305, 175),
+	Vec2(350, 0),
 };
 
 float alchemy_icon_angle[7] =
@@ -64,10 +64,10 @@ float alchemy_icon_angle[7] =
 
 Vec2 mix_result_pos[4] =
 {
-	ccp(95.0f, 90.0f),
-	ccp(285.0f, 90.0f),
-	ccp(795.0f, 90.0f),
-	ccp(985.0f, 90.0f)
+	Vec2(95.0f, 90.0f),
+	Vec2(285.0f, 90.0f),
+	Vec2(795.0f, 90.0f),
+	Vec2(985.0f, 90.0f)
 };
 
 /*
@@ -106,7 +106,7 @@ MixPanel::~MixPanel()
 
 
 bool MixPanel::init() {
-	if(CCLayer::init() == false) {
+	if(Layer::init() == false) {
 		return false;
 	}
     
@@ -119,35 +119,35 @@ bool MixPanel::init() {
 	"Layer/lInGame/lEssenceButton/lEssenceButton.ExportJson");
 	mixBtn  = CCArmature::create("lEssenceButton");
     mixBtn->setPosition(mixBtn_pos);
-	mixBtn->getAnimation()->playWithIndex(0, -1, -1, -1, 10000);
+	mixBtn->getAnimation()->playWithIndex(0, -1, -1);
     addChild(mixBtn,11);
  	
 	/* MixPenal : background */
-	mixPanel = CCSprite::create("Layer/lInGame/lMixPanel.png");
+	mixPanel = Sprite::create("Layer/lInGame/lMixPanel.png");
 	Size panel_size = mixPanel->getContentSize();
-	mixPanel->setPosition(Vec2Zero);
-	mixPanel->setAnchorPoint(ccp(0.0f, 0.0f));
+	mixPanel->setPosition(Vec2::ZERO);
+	mixPanel->setAnchorPoint(Vec2(0.0f, 0.0f));
 	addChild(mixPanel,10);
 
 	/* Mana Bar */
-	mana_bar = PEProgressBar::create("Layer/lInGame/lManaBar.png", 10, 0, ccp(0.0f, 0.5f));
-	mana_bar->setPosition(ccp(panel_size.width - 62.0f - mana_bar->get_bar_width(), 203.0f));
-	mana_bar->set_bar_start_pos(ccp(panel_size.width - 62.0f - mana_bar->get_bar_width(), 203.0f));
+	mana_bar = PEProgressBar::create("Layer/lInGame/lManaBar.png", 10, 0, Vec2(0.0f, 0.5f));
+	mana_bar->setPosition(Vec2(panel_size.width - 62.0f - mana_bar->get_bar_width(), 203.0f));
+	mana_bar->set_bar_start_pos(Vec2(panel_size.width - 62.0f - mana_bar->get_bar_width(), 203.0f));
 	mixPanel->addChild(mana_bar);
 	
 	/* Con Bar */
-	con_bar = PEProgressBar::create("Layer/lInGame/lConBar.png", 10, 1, ccp(1.0f, 0.5f));
-	con_bar->setPosition(ccp(62.0f + con_bar->get_bar_width(), 203.0f));
-	con_bar->set_bar_start_pos(ccp(62.0f + con_bar->get_bar_width(), 203.0f));
+	con_bar = PEProgressBar::create("Layer/lInGame/lConBar.png", 10, 1, Vec2(1.0f, 0.5f));
+	con_bar->setPosition(Vec2(62.0f + con_bar->get_bar_width(), 203.0f));
+	con_bar->set_bar_start_pos(Vec2(62.0f + con_bar->get_bar_width(), 203.0f));
 	mixPanel->addChild(con_bar);
 	
 	Vec2 doorLife_pos[5] =
 	{
-		ccp(panel_size.width/2 - 110.0f,	231.0f),
-		ccp(panel_size.width/2 - 58.0f,		260.0f),
-		ccp(panel_size.width/2+1,			270.0f),
-		ccp(panel_size.width/2 + 60.0f,		260.0f),
-		ccp(panel_size.width/2 + 112.0f,	231.0f)
+		Vec2(panel_size.width/2 - 110.0f,	231.0f),
+		Vec2(panel_size.width/2 - 58.0f,		260.0f),
+		Vec2(panel_size.width/2+1,			270.0f),
+		Vec2(panel_size.width/2 + 60.0f,		260.0f),
+		Vec2(panel_size.width/2 + 112.0f,	231.0f)
 	};
 	
 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(
@@ -159,7 +159,7 @@ bool MixPanel::init() {
 	{
 		doorLife[i]  = CCArmature::create("lDoorLife");
 		doorLife[i]->setPosition(doorLife_pos[i]);
-		doorLife[i]->getAnimation()->playWithIndex(0, -1, -1, -1, 10000);
+		doorLife[i]->getAnimation()->playWithIndex(0, -1, -1);
 		mixPanel->addChild(doorLife[i],10);
 	}
 	doorLifeCount = 5;
@@ -179,12 +179,12 @@ bool MixPanel::init() {
 	}
 	
 	/* selected icon noti */
-	select_noti = CCSprite::create("Layer/lSelect.png");
+	select_noti = Sprite::create("Layer/lSelect.png");
 	this->addChild(select_noti, ZORDER_LOW_ICON);
 	select_noti->setVisible(false);
 
 	/* invalid mix noti */
-	mix_invalid_noti = CCSprite::create("Layer/lMixShow.png");
+	mix_invalid_noti = Sprite::create("Layer/lMixShow.png");
 	this->addChild(mix_invalid_noti, ZORDER_LOW_ICON);
 	mix_invalid_noti->setVisible(false);
 	touched_id = -1;
@@ -194,10 +194,10 @@ bool MixPanel::init() {
 	previous_selected_index = -1;
 	double_tap_called = false;
 
-	CCNotificationCenter::sharedNotificationCenter()->addObserver(this,	callfuncO_selector(MixPanel::regen_con_mana),"regen_con_mana", NULL);
+	__NotificationCenter::getInstance()->addObserver(this,	callfuncO_selector(MixPanel::regen_con_mana),"regen_con_mana", NULL);
 
 	
-	batch_par = CCSpriteBatchNode::create("fire.png", 5);
+	batch_par = SpriteBatchNode::create("fire.png", 5);
 	addChild(batch_par);
 	
 	return true;
@@ -205,22 +205,22 @@ bool MixPanel::init() {
 
 void MixPanel::onExit()
 {
-	CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, "regen_con_mana");
+	__NotificationCenter::getInstance()->removeObserver(this, "regen_con_mana");
 }
 
-void MixPanel::particle_end(CCObject* pObject)
+void MixPanel::particle_end(Ref* pObject)
 {
-	CCArray *pParam=(CCArray*)pObject;
+	__Array *pParam=(__Array*)pObject;
 	CCParticleSun* par = (CCParticleSun*)pParam->objectAtIndex(0);
 
 	par->stopSystem();
 }
 
-void MixPanel::bar_change(CCObject* pObject)
+void MixPanel::bar_change(Ref* pObject)
 {
-	CCArray *pParam=(CCArray*)pObject;
-	CCInteger* type = (CCInteger*)pParam->objectAtIndex(0);
-	CCInteger* value = (CCInteger*)pParam->objectAtIndex(1);
+	__Array *pParam=(__Array*)pObject;
+	__Integer* type = (__Integer*)pParam->objectAtIndex(0);
+	__Integer* value = (__Integer*)pParam->objectAtIndex(1);
 	CCParticleSun* par = (CCParticleSun*)pParam->objectAtIndex(2);
 
 	switch(type->getValue())
@@ -240,30 +240,30 @@ void MixPanel::bar_change(CCObject* pObject)
 	par->removeFromParent();
 }
 
-void MixPanel::add_particle_to_bar(CCObject* object)
+void MixPanel::add_particle_to_bar(Ref* object)
 {
-	CCArray *pParam=(CCArray*)object;
+	__Array *pParam=(__Array*)object;
 	CCParticleSun* par = (CCParticleSun*)pParam->objectAtIndex(0);
-	CCInteger* type = (CCInteger*)pParam->objectAtIndex(1);
+	__Integer* type = (__Integer*)pParam->objectAtIndex(1);
 	
 	switch(type->getValue())
 	{
 		//con
 		case 0:
-			par->setPosition(ccp(con_bar->get_bar_start_pos().x - con_bar->get_bar_end_pos(), con_bar->get_bar_start_pos().y));
+			par->setPosition(Vec2(con_bar->get_bar_start_pos().x - con_bar->get_bar_end_pos(), con_bar->get_bar_start_pos().y));
 			con_bar->push_particle_to_vector(par);
 			break;
 		//mana
 		case 1:
-			par->setPosition(ccp(mana_bar->get_bar_start_pos().x + mana_bar->get_bar_end_pos(), mana_bar->get_bar_start_pos().y));
+			par->setPosition(Vec2(mana_bar->get_bar_start_pos().x + mana_bar->get_bar_end_pos(), mana_bar->get_bar_start_pos().y));
 			mana_bar->push_particle_to_vector(par);
 			break;
 	}
 }
 
-void MixPanel::regen_con_mana(CCObject *obj){
-	CCArray *pParam=(CCArray*)obj;
-	CCInteger* data = (CCInteger*)pParam->objectAtIndex(0);
+void MixPanel::regen_con_mana(Ref *obj){
+	__Array *pParam=(__Array*)obj;
+	__Integer* data = (__Integer*)pParam->objectAtIndex(0);
 	CCFloat* pos_x =(CCFloat*)pParam->objectAtIndex(1);
 	CCFloat* pos_y =(CCFloat*)pParam->objectAtIndex(2);
 	int type = data->getValue()%2;
@@ -277,15 +277,15 @@ void MixPanel::regen_con_mana(CCObject *obj){
 	ccBezierConfig bezierConfig;
 	if(type == 0)
 	{
-		bezierConfig.endPosition = ccp(con_bar->get_bar_start_pos().x - con_bar->get_bar_end_pos(), con_bar->get_bar_start_pos().y);
-		bezierConfig.controlPoint_1 = ccp(x,y+100.0f);
-		bezierConfig.controlPoint_2 = ccp(bezierConfig.endPosition.x, y+100.0f);
+		bezierConfig.endPosition = Vec2(con_bar->get_bar_start_pos().x - con_bar->get_bar_end_pos(), con_bar->get_bar_start_pos().y);
+		bezierConfig.controlPoint_1 = Vec2(x,y+100.0f);
+		bezierConfig.controlPoint_2 = Vec2(bezierConfig.endPosition.x, y+100.0f);
 	}
 	else
 	{
-		bezierConfig.endPosition = ccp(mana_bar->get_bar_start_pos().x + mana_bar->get_bar_end_pos(), mana_bar->get_bar_start_pos().y);
-		bezierConfig.controlPoint_1 = ccp(x,y+100.0f);
-		bezierConfig.controlPoint_2 = ccp(bezierConfig.endPosition.x, y+100.0f);
+		bezierConfig.endPosition = Vec2(mana_bar->get_bar_start_pos().x + mana_bar->get_bar_end_pos(), mana_bar->get_bar_start_pos().y);
+		bezierConfig.controlPoint_1 = Vec2(x,y+100.0f);
+		bezierConfig.controlPoint_2 = Vec2(bezierConfig.endPosition.x, y+100.0f);
 	}
 	
 	CCBezierTo* pBezier = CCBezierTo::create(0.7, bezierConfig);
@@ -298,12 +298,12 @@ void MixPanel::regen_con_mana(CCObject *obj){
 	par->setLife(0.4);
 
 	CCActionInterval* wait = CCDelayTime::create(0.5);
-	CCArray* array1 = CCArray::create(par, CCInteger::create(type), NULL);
-	CCArray* array2 = CCArray::create(par, NULL);
-	CCArray* array3 = CCArray::create(CCInteger::create(type), CCInteger::create(value), par, NULL);
-	CCCallFuncO* pCallFunc0 =  CCCallFuncO::create(this, callfuncO_selector(MixPanel::add_particle_to_bar), (CCObject*)array1);
-	CCCallFuncO* pCallFunc1 =  CCCallFuncO::create(this, callfuncO_selector(MixPanel::particle_end), (CCObject*)array2);
-	CCCallFuncO* pCallFunc2 =  CCCallFuncO::create(this, callfuncO_selector(MixPanel::bar_change), (CCObject*)array3);
+	__Array* array1 = __Array::create(par, __Integer::create(type), NULL);
+	__Array* array2 = __Array::create(par, NULL);
+	__Array* array3 = __Array::create(__Integer::create(type), __Integer::create(value), par, NULL);
+	CCCallFuncO* pCallFunc0 =  CCCallFuncO::create(this, callfuncO_selector(MixPanel::add_particle_to_bar), (Ref*)array1);
+	CCCallFuncO* pCallFunc1 =  CCCallFuncO::create(this, callfuncO_selector(MixPanel::particle_end), (Ref*)array2);
+	CCCallFuncO* pCallFunc2 =  CCCallFuncO::create(this, callfuncO_selector(MixPanel::bar_change), (Ref*)array3);
     par->runAction(CCSequence::create( pBezier, pCallFunc0, wait, pCallFunc1, wait, pCallFunc2, NULL));
 }
 
@@ -320,7 +320,7 @@ void MixPanel::setPEIcon(PEIcon* peicon){
 
 bool MixPanel::PE_checkClickMixBtn(Vec2* pos)
 {
-	return mixBtn->boundingBox().containsPoint(*pos);
+	return mixBtn->getBoundingBox().containsPoint(*pos);
 }
 
 void MixPanel::resetPanel()
@@ -447,22 +447,23 @@ void MixPanel::check_alchemy_icon_valid(void)
 void MixPanel::makeIcon(int icon_index, int element_index)
 {
 	/* icon background */
-	icon_background[icon_index] = CCSprite::create(icon_background_filename[element_index]);
-	icon_background[icon_index]->setAnchorPoint(ccp(0.5f, 0.78f));
-	icon_background[icon_index]->setPosition(ccp(mixBtn_pos.x + element_icon_pos[element_index].x, mixBtn_pos.y + element_icon_pos[element_index].y));
+	icon_background[icon_index] = Sprite::create(icon_background_filename[element_index]);
+	icon_background[icon_index]->setAnchorPoint(Vec2(0.5f, 0.78f));
+	icon_background[icon_index]->setPosition(Vec2(mixBtn_pos.x + element_icon_pos[element_index].x, mixBtn_pos.y + element_icon_pos[element_index].y));
 	icon_background[icon_index]->setScale(0.8f);
 	icon_background[icon_index]->setRotation(-45.0f + 30.0f*element_index); //-45, -15, 15, 45 degree
 	addChild(icon_background[icon_index],5);
 
 	/* icon */
 	icon[icon_index] = MixResource::create(icon_index+1);
-	icon[icon_index]->setPosition(ccp(mixBtn_pos.x + element_icon_pos[element_index].x, mixBtn_pos.y + element_icon_pos[element_index].y));
+	icon[icon_index]->setPosition(Vec2(mixBtn_pos.x + element_icon_pos[element_index].x, mixBtn_pos.y + element_icon_pos[element_index].y));
 	icon[icon_index]->setScale(0.8f); 
 	addChild(icon[icon_index],5);
 }
 
-void MixPanel::ccTouchesBegan(CCSet *pTouches, CCEvent* pEvent) {
-	CCTouch* pTouch = (CCTouch*)pTouches->anyObject();
+void MixPanel::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
+{
+	Touch* pTouch = (Touch*)touches[0];
 	Vec2 point = pTouch->getLocation();
 	int touchId = pTouch->getID();
 	selected_index = -1;
@@ -493,7 +494,7 @@ void MixPanel::ccTouchesBegan(CCSet *pTouches, CCEvent* pEvent) {
 		{
 			if(alchemy_icon[i] != NULL
 			   && alchemy_icon[i]->getTouchable()
-			   && alchemy_icon[i]->boundingBox().containsPoint(point))
+			   && alchemy_icon[i]->getBoundingBox().containsPoint(point))
 			{
 				select_alchemy_icon_index = i;
 				touched_id = touchId;
@@ -507,8 +508,9 @@ void MixPanel::ccTouchesBegan(CCSet *pTouches, CCEvent* pEvent) {
 }
 
 
-void MixPanel::ccTouchesMoved(CCSet *pTouches, CCEvent* pEvent) {
-	CCTouch* pTouch = (CCTouch*)pTouches->anyObject();
+void MixPanel::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
+{
+	Touch* pTouch;
     Vec2 point;
     CCSetIterator iter;
     bool selected_touch = false;
@@ -520,12 +522,12 @@ void MixPanel::ccTouchesMoved(CCSet *pTouches, CCEvent* pEvent) {
 	if(touched_id == -1)
 		return;
 
-    for(iter = pTouches->begin(); iter != pTouches->end(); ++iter)
+    for(auto& touch : touches)
     {
-    	pTouch = (CCTouch *)(*iter);
-    	if(touched_id == pTouch->getID())
+    	if(touched_id == touch->getID())
     	{
 	   		selected_touch = true;
+            pTouch = touch;
 	   		break;
     	}
     }
@@ -533,7 +535,7 @@ void MixPanel::ccTouchesMoved(CCSet *pTouches, CCEvent* pEvent) {
     if(!selected_touch)
     	return;
 
-	pTouch = (CCTouch*)pTouches->anyObject();
+	pTouch = (Touch*)touches[0];
     point = pTouch->getLocation();
 
 	if(select_alchemy_icon_index != -1)
@@ -548,7 +550,7 @@ void MixPanel::ccTouchesMoved(CCSet *pTouches, CCEvent* pEvent) {
 		{
 			if(icon[i] != NULL
 			   && icon[i]->getTouchable()
-			   && icon[i]->boundingBox().containsPoint(point)
+			   && icon[i]->getBoundingBox().containsPoint(point)
 			   && selected_index != i)
 			{
 				int make_icon[4];
@@ -596,9 +598,9 @@ void MixPanel::ccTouchesMoved(CCSet *pTouches, CCEvent* pEvent) {
 				for(int j=0; j<cand_count; j++)
 				{
 					/* icon background */
-					icon_background[last_icon_index+j] = CCSprite::create(icon_background_filename[make_background[j]]);
-					icon_background[last_icon_index+j]->setAnchorPoint(ccp(0.5f, 0.78f));
-					icon_background[last_icon_index+j]->setPosition(ccp(
+					icon_background[last_icon_index+j] = Sprite::create(icon_background_filename[make_background[j]]);
+					icon_background[last_icon_index+j]->setAnchorPoint(Vec2(0.5f, 0.78f));
+					icon_background[last_icon_index+j]->setPosition(Vec2(
 						select_icon_pos.x 
 						+ alchemy_icon_pos[icon_pos_index[cand_count-1][left_right_flag][j]].x, 
 						select_icon_pos.y 
@@ -611,7 +613,7 @@ void MixPanel::ccTouchesMoved(CCSet *pTouches, CCEvent* pEvent) {
 					/* icon */
 					icon[last_icon_index+j] = MixResource::create(make_icon[j]);
 					addChild(icon[last_icon_index+j], 5-icon_circle);
-					icon[last_icon_index+j]->setPosition(ccp(
+					icon[last_icon_index+j]->setPosition(Vec2(
 						select_icon_pos.x 
 						+ alchemy_icon_pos[icon_pos_index[cand_count-1][left_right_flag][j]].x, 
 						select_icon_pos.y 
@@ -668,8 +670,9 @@ void MixPanel::ccTouchesMoved(CCSet *pTouches, CCEvent* pEvent) {
 	}
 }
 
-void MixPanel::ccTouchesEnded(CCSet *pTouches, CCEvent* pEvent) {
-	CCTouch* pTouch = (CCTouch*)pTouches->anyObject();
+void MixPanel::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
+{
+	Touch* pTouch = (Touch*)touches[0];
 	
 	gestureDetector(pTouch, PE_TOUCH_UP);
 	
@@ -733,7 +736,7 @@ void MixPanel::onDoubleTap(Vec2 pos)
 		for(int i=0; i<4; i++)
 		{
 			if(alchemy_icon[i] != NULL
-			   && alchemy_icon[i]->boundingBox().containsPoint(pos))
+			   && alchemy_icon[i]->getBoundingBox().containsPoint(pos))
 			{
 				alchemy_icon[i]->removeFromParentAndCleanup(true);
 				alchemy_icon[i] = NULL;
@@ -751,7 +754,7 @@ void MixPanel::decreaseDoorLife(int num)
 	for(int i=0; i<num; i++)
 	{
 		doorLifeCount--;
-		doorLife[doorLifeCount]->getAnimation()->playWithIndex(1, -1, -1, 0, 0);
+		doorLife[doorLifeCount]->getAnimation()->playWithIndex(1, -1, -1);
 
 		if(doorLifeCount == 0)
 		{
@@ -766,14 +769,14 @@ void MixPanel::sendFail(float in)
 {
 	char buf[5];
 	sprintf(buf, "%d", POPUP_FAIL);
-	CCString* popParam=CCString::create(buf);
-	CCNotificationCenter::sharedNotificationCenter()->postNotification("scene_popup", popParam);
+	__String* popParam=__String::create(buf);
+	__NotificationCenter::getInstance()->postNotification("scene_popup", popParam);
 }
 
 void MixPanel::sendPass(void)
 {
 	char buf[5];
 	sprintf(buf, "%d", POPUP_SUCCESS+doorLifeCount*10);
-	CCString* popParam=CCString::create(buf);
-	CCNotificationCenter::sharedNotificationCenter()->postNotification("scene_popup", popParam);
+	__String* popParam=__String::create(buf);
+	__NotificationCenter::getInstance()->postNotification("scene_popup", popParam);
 }
